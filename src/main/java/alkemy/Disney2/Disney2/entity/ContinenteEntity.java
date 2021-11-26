@@ -22,7 +22,7 @@ public class ContinenteEntity {
     private String denominacion;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)     // 1 a n
-    @JoinColumn(name = "ciudad_id", insertable = false, updatable = false) // solo lo uso para obtener(get) las ciudades
+    @JoinColumn(name = "id", insertable = false, updatable = false) // solo lo uso para obtener(get) las ciudades   REEMPLAZO CIUDAD_ID POR ID Y LEVANTGO DEVUELTA EL PRY
 
     private List<CiudadEntity> ciudades = new ArrayList<>();  // coleccion de ciudades que contiene el continente
 }

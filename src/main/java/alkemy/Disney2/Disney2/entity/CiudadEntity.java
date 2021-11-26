@@ -27,11 +27,11 @@ public class CiudadEntity {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)     // 1 a n
     @JoinColumn(name = "continente_id", insertable = false, updatable = false)
-    // solo lo uso para obtener(get) info por eso false en update y demas-> se a q CONT  pertenece
-    private ContinenteEntity continente;            //variable/tabla   continente al cual pertenece la ciudad.ME trae el continente
+                                                                        // solo lo uso para obtener(get) info por eso false en update y demas-> se a q CONT  pertenece
+    private ContinenteEntity continente;                                //variable/tabla   continente al cual pertenece la ciudad.ME trae el continente
 
     @Column(name = "continente_id", nullable = false)
-    private Long continenteId;        //defino la columna q no puede ser null y apunta a un cont
+    private Long continenteId;                                      //defino la columna q no puede ser null y apunta a un cont
 
     @ManyToMany(
             cascade = {
@@ -39,8 +39,8 @@ public class CiudadEntity {
                     CascadeType.MERGE
             })
     @JoinTable(
-            name = "icon_ciudad",    // nombre de la tabla INTERMEDIA
-            joinColumns = @JoinColumn(name = "ciudad_id"),  //como joinea de este lado
+            name = "icon_ciudad",                                   // nombre de la tabla INTERMEDIA
+            joinColumns = @JoinColumn(name = "ciudad_id"),          //como joinea de este lado
             inverseJoinColumns = @JoinColumn(name = "icon_id"))    // como joinea del otro lado(Icon)
     private Set<IconEntity> icons = new HashSet<>();
 
