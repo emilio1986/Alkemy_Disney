@@ -42,6 +42,7 @@ public class CiudadEntity {
             name = "icon_ciudad",                                   // nombre de la tabla INTERMEDIA
             joinColumns = @JoinColumn(name = "ciudad_id"),          //como joinea de este lado
             inverseJoinColumns = @JoinColumn(name = "icon_id"))    // como joinea del otro lado(Icon)
+
     private Set<IconEntity> icons = new HashSet<>();
 
     @Override
@@ -53,6 +54,8 @@ public class CiudadEntity {
 
     }
 
+    public void removeIcon(IconEntity iconEntity) {
+    }
 }
 
 

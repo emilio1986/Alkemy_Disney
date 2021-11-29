@@ -17,6 +17,7 @@ public class ContinenteController {
 
     @Autowired
     private ContinenteService continenteService; //Interfaz
+
     //tipo de solicitud
     @PostMapping
     public ResponseEntity<ContinenteDTO>  save(@RequestBody ContinenteDTO continente){
