@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+
+
+
 @RequestMapping("continentes")
 
 public class ContinenteController {
@@ -31,6 +34,15 @@ public class ContinenteController {
         List<ContinenteDTO> continentes = this.continenteService.getAllContinentes();
         return ResponseEntity.ok().body(continentes);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        this.continenteService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
+
+
 }
 
 

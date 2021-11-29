@@ -40,4 +40,9 @@ public class ContinenteServiceImpl implements ContinenteService {
         return result;
     }
 
+
+    public void delete(Long id) {
+        this.continenteRepository.getById(id);
+    }
+
 }

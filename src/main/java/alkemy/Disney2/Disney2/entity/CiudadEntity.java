@@ -3,6 +3,8 @@ package alkemy.Disney2.Disney2.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -12,6 +14,9 @@ import java.util.Set;
 @Table(name = "ciudad")
 @Getter
 @Setter
+//Soft delete-> se convierte en una ctualizacion donde setea el campo deleted en true al id recibido.
+@SQLDelete(sql = "UPDATE icon SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false") //-> con esta clausula identifico los que estan "borrados de los que no"
 public class CiudadEntity {
 
     @Id
@@ -25,13 +30,16 @@ public class CiudadEntity {
     @Column(name = "cant_habitantes")  //cuando el nombre es = al d la tabla NO va @column
     private Long superficie; //m2
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)     // 1 a n
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)                         // 1 a n
     @JoinColumn(name = "continente_id", insertable = false, updatable = false)
-                                                                        // solo lo uso para obtener(get) info por eso false en update y demas-> se a q CONT  pertenece
-    private ContinenteEntity continente;                                //variable/tabla   continente al cual pertenece la ciudad.ME trae el continente
+    // solo lo uso para obtener(get) info por eso false en update y demas-> se a q CONT  pertenece
+    private ContinenteEntity continente;                                               //variable/tabla   continente al cual pertenece la ciudad.ME trae el continente
 
     @Column(name = "continente_id", nullable = false)
     private Long continenteId;                                      //defino la columna q no puede ser null y apunta a un cont
+
+    //soft Delete
+    private boolean deleted = Boolean.FALSE;
 
     @ManyToMany(
             cascade = {
