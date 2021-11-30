@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 @Setter
 //Soft delete-> se convierte en una ctualizacion donde setea el campo deleted en true al id recibido.
-@SQLDelete(sql = "UPDATE icon SET deleted = true WHERE id=?")
+@SQLDelete(sql = "UPDATE ciudad SET deleted = true WHERE id=?")
 @Where(clause = "deleted = false") //-> con esta clausula identifico los que estan "borrados de los que no"
 public class CiudadEntity {
 
@@ -32,6 +32,7 @@ public class CiudadEntity {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)                         // 1 a n
     @JoinColumn(name = "continente_id", insertable = false, updatable = false)
+
     // solo lo uso para obtener(get) info por eso false en update y demas-> se a q CONT  pertenece
     private ContinenteEntity continente;                                               //variable/tabla   continente al cual pertenece la ciudad.ME trae el continente
 

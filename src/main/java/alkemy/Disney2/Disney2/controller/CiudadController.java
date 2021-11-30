@@ -2,21 +2,12 @@ package alkemy.Disney2.Disney2.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
 import alkemy.Disney2.Disney2.dto.CiudadDTO;
 import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
 import alkemy.Disney2.Disney2.service.CiudadService;
 import org.springframework.beans.factory.annotation.Autowired;
-
-
 
 
 import java.util.List;
@@ -29,7 +20,8 @@ public class CiudadController {
     private CiudadService ciudadService; //Interfaz
 
     @Autowired
-    CiudadController(CiudadService ciudadService) {           //me llega un IconService y se lo asigno a mi iconService
+    public CiudadController(CiudadService ciudadService) {
+
         this.ciudadService = ciudadService;
     }
 
@@ -42,7 +34,7 @@ public class CiudadController {
 
     //tipo de solicitud
     @GetMapping("/{id}")
-    public ResponseEntity<CiudadDTO> getDetailsById(@PathVariable Long id) {
+    public ResponseEntity<CiudadDTO> getDetailsById(@PathVariable Long id ) {
         CiudadDTO ciudad = this.ciudadService.getDetailsById(id);
         return ResponseEntity.ok(ciudad);  //devuelvo la ciudad a mostrar
     }
@@ -55,7 +47,7 @@ public class CiudadController {
 
     }
 
-    @PostMapping("/{id}/icons/idIcon")
+    @PostMapping("/{id}/icons/{idIcon}")   //-> Icons se usa pra darle semantica  la URL
     public ResponseEntity<Void> addIcon(@PathVariable Long id, @PathVariable Long idIcon) {
 
         this.ciudadService.addICon(id, idIcon);

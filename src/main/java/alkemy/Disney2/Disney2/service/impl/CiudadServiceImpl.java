@@ -18,10 +18,11 @@ import java.util.Optional;
 @Service
 public class CiudadServiceImpl implements CiudadService {
 
+////////////////////////////////////////////////////////
 
+    //Inyeccion de repositorio "CiudadRep"  para que ni bien se levanta Spring lo pueda usar
     private CiudadRepository ciudadRepository;
 
-    //Sacarprivate CiudadSpecification ciudadSpecification;
 
     private CiudadMapper ciudadMapper;
 
@@ -30,38 +31,31 @@ public class CiudadServiceImpl implements CiudadService {
     @Autowired
     public CiudadServiceImpl(
             CiudadRepository ciudadRepository,
-            //Sacar Ciudad Specification ciudadSpecification,   //Sacar
             CiudadMapper ciudadMapper,
             IconService iconService
     ) {
         this.ciudadRepository = ciudadRepository;
-        //Sacar this.ciudadSpecification = ciudadSpecification;
+
         this.ciudadMapper = ciudadMapper;
         this.iconService = iconService;
     }
-
-    ////////////////////////////////////////////////////////
-
-    //Inyeccion de repositorio "CiudadRep"  para que ni bien se levanta Spring lo pueda usar
 
 
     @Override
     public CiudadDTO getDetailsById(Long id) {
         Optional<CiudadEntity> entity = Optional.of(ciudadRepository.getById(id));
-        // if (!entity.isPresent()) {
-        //   return (System.out.println("Invalido IDciudad ")); //??? Deberia ir una excepcion??
-        //}
+
         CiudadDTO ciudadDTO = this.ciudadMapper.ciudadEntity2DTO(entity.get(), true);
         return ciudadDTO;
     }
 
 
     @Override
-    public CiudadDTO save(CiudadDTO dto) {
+    public CiudadDTO save(CiudadDTO dto ) {
         CiudadEntity entity = ciudadMapper.ciudadDTO2Entity(dto);
         CiudadEntity entidadGuardada = ciudadRepository.save(entity);
         CiudadDTO result;
-        result = ciudadMapper.ciudadEntity2DTO(true ,entidadGuardada);
+        result = ciudadMapper.ciudadEntity2DTO(true, entidadGuardada);
         return result;
     }
 

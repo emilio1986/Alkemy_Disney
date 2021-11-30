@@ -28,7 +28,7 @@ public class ContinenteServiceImpl implements ContinenteService {
         this.continenteMapper = continenteMapper;
     }
 
-    public ContinenteDTO save(ContinenteDTO dto) {
+    public ContinenteDTO save(ContinenteDTO dto) {      //ANDA
         //variable privada de la clase "ContMapper"
         ContinenteEntity entity = continenteMapper.continenteDTO2Entity(dto);
         // guardo el  CONTINENTE como entity en BD y me lo quedo  en entitySaved para conv Entity2Dto
@@ -40,7 +40,7 @@ public class ContinenteServiceImpl implements ContinenteService {
     }
 
     @Override
-    public List<ContinenteDTO> getAllContinentes() {
+    public List<ContinenteDTO> getAllContinentes() {                //ANDA
         List<ContinenteEntity> entities = continenteRepository.findAll();
         List<ContinenteDTO> result = continenteMapper.continenteEntityList2DTOList(entities);
         return result;
@@ -49,10 +49,7 @@ public class ContinenteServiceImpl implements ContinenteService {
 
     public ContinenteDTO update(Long id, ContinenteDTO continente) {
         Optional<ContinenteEntity> oldEntity = Optional.of(this.continenteRepository.getById(id));
-        if (!oldEntity.isPresent()) {
-            System.out.println("icon id not valid"); // ?? EXcepcion??
-        } //Aca lo estoy dejando pasar igual si esta mal el dato-> corregir
-
+       //excepcion??
         ContinenteEntity newEntity = continenteMapper.continenteDTO2Entity(continente);
         newEntity.setId(oldEntity.get().getId());
         ContinenteEntity entitySaved = continenteRepository.save(newEntity);
@@ -74,7 +71,7 @@ public class ContinenteServiceImpl implements ContinenteService {
 
     public void delete(Long id) {
         this.continenteRepository.deleteById(id);
-    }
+    }     //ANDA
 
     @Override
     public ContinenteDTO getContinenteById(Long id) {

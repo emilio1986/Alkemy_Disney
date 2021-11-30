@@ -16,7 +16,7 @@ import java.util.*;
 @Component
 public class CiudadMapper {
 
-
+    @Autowired
     private IconMapper iconMapper;
 
 
@@ -69,7 +69,6 @@ public class CiudadMapper {
     }
 
 
-
     public List<CiudadDTO> ciudadEntitySet2TDOList(List<CiudadEntity> listaCiudad, boolean loadIcons) {
         List<CiudadDTO> dtos = new ArrayList<>();
         for (CiudadEntity entity : listaCiudad) {
@@ -90,13 +89,11 @@ public class CiudadMapper {
     }
 
 
-
-
     public void ciudadEntityRefreshValues(CiudadEntity entity, CiudadDTO dto) {
         entity.setDenominacion(dto.getDenominacion());
         //entity.set(dto.getPopulation());//falto tabla habitantes
         entity.setSuperficie(dto.getSuperficie());
-        entity.setContinenteId(dto.getContiennteiD());
+        entity.setContinenteId(dto.getContinenteId());
         entity.setImagen(dto.getImagen());
     }
 
@@ -112,7 +109,6 @@ public class CiudadMapper {
         }
         return dtos;
     }
-
 
 
     public List<CiudadBasicDTO> ciudadesEntityList2BasicDTOList(List<CiudadEntity> entities) {
