@@ -1,65 +1,112 @@
 package alkemy.Disney2.Disney2.service.impl;
 
+import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
 import alkemy.Disney2.Disney2.dto.CiudadDTO;
-
+import org.springframework.stereotype.Service;
 import alkemy.Disney2.Disney2.entity.CiudadEntity;
 import alkemy.Disney2.Disney2.entity.IconEntity;
 import alkemy.Disney2.Disney2.mapper.CiudadMapper;
 import alkemy.Disney2.Disney2.repository.CiudadRepository;
 import alkemy.Disney2.Disney2.service.CiudadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import alkemy.Disney2.Disney2.service.IconService;
+
 import java.util.List;
-import  alkemy.Disney2.Disney2.service.IconService;
+import java.util.Optional;
+
+
+@Service
 public class CiudadServiceImpl implements CiudadService {
 
-    @Autowired
+
+    private CiudadRepository ciudadRepository;
+
+    //Sacarprivate CiudadSpecification ciudadSpecification;
+
     private CiudadMapper ciudadMapper;
 
-    @Autowired
     private IconService iconService;
 
-    //Inyeccion de repositorio "CiudadRep"  para que ni bien se levanta Spring lo pueda usar
     @Autowired
-    private CiudadRepository ciudadRepository;
+    public CiudadServiceImpl(
+            CiudadRepository ciudadRepository,
+            //Sacar Ciudad Specification ciudadSpecification,   //Sacar
+            CiudadMapper ciudadMapper,
+            IconService iconService
+    ) {
+        this.ciudadRepository = ciudadRepository;
+        //Sacar this.ciudadSpecification = ciudadSpecification;
+        this.ciudadMapper = ciudadMapper;
+        this.iconService = iconService;
+    }
+
+    ////////////////////////////////////////////////////////
+
+    //Inyeccion de repositorio "CiudadRep"  para que ni bien se levanta Spring lo pueda usar
+
 
     @Override
     public CiudadDTO getDetailsById(Long id) {
-        return null;
+        Optional<CiudadEntity> entity = Optional.of(ciudadRepository.getById(id));
+        // if (!entity.isPresent()) {
+        //   return (System.out.println("Invalido IDciudad ")); //??? Deberia ir una excepcion??
+        //}
+        CiudadDTO ciudadDTO = this.ciudadMapper.ciudadEntity2DTO(entity.get(), true);
+        return ciudadDTO;
+    }
+
+
+    @Override
+    public CiudadDTO save(CiudadDTO dto) {
+        CiudadEntity entity = ciudadMapper.ciudadDTO2Entity(dto);
+        CiudadEntity entidadGuardada = ciudadRepository.save(entity);
+        CiudadDTO result;
+        result = ciudadMapper.ciudadEntity2DTO(true ,entidadGuardada);
+        return result;
     }
 
     @Override
-    public List<CiudadDTO> getAll() {
-        return null;
+    public List<CiudadBasicDTO> getAll() {
+        List<CiudadEntity> entities = ciudadRepository.findAll();
+        List<CiudadBasicDTO> iconBasicDTOS = ciudadMapper.ciudadEntityList2BasicDTOList(entities);
+        return iconBasicDTOS;
     }
-
-    @Override
-    public CiudadDTO save(CiudadDTO ciudadDTO) {
-        return null;
-    }
-
 
     @Override
     public CiudadDTO update(Long id, CiudadDTO icon) {
-        return null;
+        Optional<CiudadEntity> entity = this.ciudadRepository.findById(id);
+        //if (!entity.isPresent()) {
+        //return (System.out.println(" ciudad Invalida ")); //??? Deberia ir una excepcion??
+        //}
+        this.ciudadMapper.ciudadEntityRefreshValues(entity.get(), icon);
+        CiudadEntity entidadAct = this.ciudadRepository.save(entity.get());
+        CiudadDTO result = this.ciudadMapper.ciudadEntity2DTO(entidadAct, true);
+        return result;
     }
 
-    public CiudadDTO update(Long id, Long idIcono) {
-        return null;
-    }
 
     @Override
-    public void addICon(Long id, Long idICon) {
-
+    public void addICon(Long id, Long idIcon) {
+        CiudadEntity entity = this.ciudadRepository.getById(id);
+        entity.getIcons().size();
+        IconEntity iconEntity = this.iconService.getEntityById(idIcon);
+        entity.addIcon(iconEntity);
+        this.ciudadRepository.save(entity);
     }
 
-    @Override
+
     public void removeIcon(Long id, Long idIcon) {
-
+        //busco el id de la ciudad a borrar en la base
+        CiudadEntity entity = this.ciudadRepository.getById(id);
+        entity.getIcons().size();
+        IconEntity iconEntity = this.iconService.getEntityById(idIcon);
+        entity.removeIcon(iconEntity);
+        this.ciudadRepository.save(entity);
     }
 
     @Override
     public void delete(Long id) {
-
+        this.ciudadRepository.deleteById(id);
     }
 
     @Override
@@ -67,15 +114,6 @@ public class CiudadServiceImpl implements CiudadService {
         return null;
     }
 
-
-    public void removeICon(Long id, Long idIcon) {
-        //busco el id de la ciudad a borrar en la base
-        CiudadEntity entity = this.ciudadRepository.getById(id);
-        entity.getIcons().size();
-        IconEntity iconEntity = this.iconService.getEntityById(idIcon);
-        entity.removeIcon(iconEntity);
-        this.ciudadRepository.save(entity);
-}
 
 //public Entity getEntityById(Long id){
 //

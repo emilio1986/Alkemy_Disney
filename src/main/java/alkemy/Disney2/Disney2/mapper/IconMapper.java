@@ -38,7 +38,7 @@ public class IconMapper {
         dto.setHistoria(entity.getHistoria());
         if(loadCiudades) {
 
-            List<CiudadDTO> ciudadesDTO = this.ciudadMapper.ciudadEntityList2DTO(entity.getCiudades(), false); // lo seteo en F para q no cargue todos las ciudades
+            List<CiudadDTO> ciudadesDTO = this.ciudadMapper.ciudadEntityList2DTOList(entity.getCiudades(), false); // lo seteo en F para q no cargue todos las ciudades
             dto.setCiudadades(ciudadesDTO);
         }
         return dto;
@@ -97,6 +97,11 @@ public class IconMapper {
 
     public Set<IconDTO> ciudadEntityList2DTO(Set<IconEntity> icons, boolean loadIcons) {
         return null; //codear
+    }
+
+    public List<IconDTO> iconEntitySet2DTOList(Set<IconEntity> icons, boolean loadIcons) {
+        return null;
+
     }
 }
 

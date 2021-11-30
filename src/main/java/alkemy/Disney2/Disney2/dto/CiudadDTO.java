@@ -16,6 +16,20 @@ public class CiudadDTO {
     private String denominacion;
     private Long superficie;
     private Set<IconDTO> icons;
-    private ContinenteEntity contiennte;
-}
+    private Long ContinenteId ;
 
+    public Long getContiennteiD() {
+        return null;
+    }
+
+    public Long getContinenteId() {
+        return null;
+    }
+
+    public Long getContinenteID() {
+        return null;
+    }
+
+    public void setContinenteId(Long continenteId) {
+    }
+}

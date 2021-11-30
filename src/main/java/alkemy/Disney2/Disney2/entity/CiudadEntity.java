@@ -64,6 +64,9 @@ public class CiudadEntity {
 
     public void removeIcon(IconEntity iconEntity) {
     }
+
+    public void addIcon(IconEntity iconEntity) {
+    }
 }
 
 

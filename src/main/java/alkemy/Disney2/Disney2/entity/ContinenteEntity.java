@@ -14,8 +14,9 @@ import java.util.List;
 @Getter
 @Setter
 //Soft delete-> se convierte en una ctualizacion donde setea el campo deleted en true al id recibido.
-@SQLDelete(sql = "UPDATE icon SET deleted = true WHERE id=?")
-@Where(clause = "deleted = false") //-> con esta clausula identifico los que estan "borrados de los que no"
+
+@SQLDelete(sql="UPDATE continente SET deleted=true WHERE id=?")
+@Where(clause="deleted=false") //-> con esta clausula identifico los que estan "borrados de los que no"
 public class ContinenteEntity {
 
     @Id

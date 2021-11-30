@@ -1,14 +1,23 @@
 package alkemy.Disney2.Disney2.controller;
 
-
-import alkemy.Disney2.Disney2.dto.IconBasicDTO;
-import alkemy.Disney2.Disney2.dto.IconDTO;
-import alkemy.Disney2.Disney2.service.CiudadService;
-import alkemy.Disney2.Disney2.service.IconService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import org.springframework.web.bind.annotation.RestController;
+import alkemy.Disney2.Disney2.dto.CiudadDTO;
+import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
+import alkemy.Disney2.Disney2.service.CiudadService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+
+
 
 import java.util.List;
 
@@ -16,36 +25,47 @@ import java.util.List;
 @RequestMapping("ciudades")
 public class CiudadController {
 
+
     private CiudadService ciudadService; //Interfaz
-    private IconService iconService;
+
+    @Autowired
+    CiudadController(CiudadService ciudadService) {           //me llega un IconService y se lo asigno a mi iconService
+        this.ciudadService = ciudadService;
+    }
 
 
-    //@Autowired
-    //me llega un IconService y se lo asigno a mi iconService
-   // public CiudadController(CiudadService ciudadService) {
-     //   this.ciudadService = ciudadService; //original
-   // }
+    @GetMapping("/all")
+    public ResponseEntity<List<CiudadBasicDTO>> getAll() {
+        List<CiudadBasicDTO> ciudades = this.ciudadService.getAll(); // REVISAR
+        return ResponseEntity.ok(ciudades);
+    }
+
+    //tipo de solicitud
+    @GetMapping("/{id}")
+    public ResponseEntity<CiudadDTO> getDetailsById(@PathVariable Long id) {
+        CiudadDTO ciudad = this.ciudadService.getDetailsById(id);
+        return ResponseEntity.ok(ciudad);  //devuelvo la ciudad a mostrar
+    }
 
 
-    @PostMapping("/{id}")
-    public ResponseEntity<IconDTO> save(@RequestBody IconDTO icon) {
-
-        IconDTO result = this.iconService.save(icon);
-        return ResponseEntity.ok().body(result);  //devuelvo el IconDto que ya guarde en BD
+    @PostMapping
+    public ResponseEntity<CiudadDTO> save(@RequestBody CiudadDTO ciudad) {
+        CiudadDTO result = this.ciudadService.save(ciudad);
+        return ResponseEntity.status((HttpStatus.CREATED)).body(result);  //devuelvo el CiudadDto que ya guarde en BD
 
     }
 
-    @PostMapping("/{id}/ciudad/idCiudad")
-    public ResponseEntity<Void> addCiudad(@PathVariable Long id, @PathVariable Long idCiudad) {
+    @PostMapping("/{id}/icons/idIcon")
+    public ResponseEntity<Void> addIcon(@PathVariable Long id, @PathVariable Long idIcon) {
 
-        this.iconService.addCiudad(id, idCiudad);
+        this.ciudadService.addICon(id, idIcon);
         return ResponseEntity.status(HttpStatus.CREATED).build();
 
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<IconDTO> update(@PathVariable Long id, @RequestBody IconDTO icon) {
-        IconDTO result = this.iconService.update(id, icon);
+    public ResponseEntity<CiudadDTO> update(@PathVariable Long id, @RequestBody CiudadDTO ciudad) {
+        CiudadDTO result = this.ciudadService.update(id, ciudad);
         return ResponseEntity.ok().body(result);
 
     }
@@ -53,31 +73,16 @@ public class CiudadController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        this.iconService.delete(id);
+        this.ciudadService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 
-    @DeleteMapping("/{id}/ciudad/{idCiudad}")
-    public ResponseEntity<Void> delete(@PathVariable Long id, @PathVariable Long idCiudad) {
-        this.iconService.removeCiudad(id, idCiudad);
+    @DeleteMapping("/{id}/icons/{idIcon}")
+    public ResponseEntity<Void> delete(@PathVariable Long id, @PathVariable Long idIcon) {
+        this.ciudadService.removeIcon(id, idIcon);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-
-    @GetMapping("/all")
-    public ResponseEntity<List<IconBasicDTO>> getAll() {
-        List<IconBasicDTO> icons = this.iconService.getAll();
-        return ResponseEntity.ok(icons);
-    }
-
-    //tipo de solicitud
-    @GetMapping("/{id}")
-    public ResponseEntity<IconDTO> getDetailsById(@PathVariable Long id) {
-        IconDTO icon = this.iconService.getDetailsById(id);
-        return ResponseEntity.ok(icon);  //devuelvo el icono a mostrar
-    }
-
 
 
 }

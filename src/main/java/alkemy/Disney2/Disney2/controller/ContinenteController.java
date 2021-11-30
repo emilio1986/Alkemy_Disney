@@ -12,8 +12,6 @@ import java.util.List;
 
 @RestController
 
-
-
 @RequestMapping("continentes")
 
 public class ContinenteController {
@@ -35,6 +33,22 @@ public class ContinenteController {
         return ResponseEntity.ok().body(continentes);
     }
 
+    @GetMapping("/{id}")
+    public  ResponseEntity<ContinenteDTO> getContById(@PathVariable Long id){
+        ContinenteDTO continente;
+        continente = this.continenteService.getContinenteById(id);
+        return ResponseEntity.ok().body(continente);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ContinenteDTO> update (@PathVariable Long id,
+            @RequestBody ContinenteDTO continente) {
+        ContinenteDTO result = this.continenteService.update(id, continente);
+        return ResponseEntity.ok(result);
+    }
+
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.continenteService.delete(id);
@@ -42,9 +56,7 @@ public class ContinenteController {
 
     }
 
-
 }
-
 
 // forma  de acceso al endpoint -> POST localhost/continente
 //solamente recibe una solicitud aca y manda una RTA

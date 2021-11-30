@@ -11,34 +11,32 @@ import java.util.List;
 @Component
 public class ContinenteMapper {
 
-        //metodo para convertir de DTo a Entity que voy a reutilizar
-    public ContinenteEntity continenteDto2Entity(ContinenteDTO dto){
-
+    //metodo para convertir de DTo a Entity que voy a reutilizar
+    public ContinenteEntity continenteDTO2Entity(ContinenteDTO dto) {
         ContinenteEntity continenteEntity = new ContinenteEntity();
         continenteEntity.setImagen(dto.getImagen());
         continenteEntity.setDenominacion(dto.getDenominacion());
 
-    return  continenteEntity;
+        return continenteEntity;
     }
 
-    public ContinenteDTO continenteEntity2TDO(ContinenteEntity entity){
 
-        ContinenteDTO dto = new ContinenteDTO();
-        dto.setImagen( entity.getImagen());
-        dto.setId(entity.getId());
-        dto.setDenominacion(entity.getDenominacion());
-    return dto;
-
-    }
-
-    public List<ContinenteDTO> continenteEntityList2TDOList(List<ContinenteEntity> entities){
-
+    public List<ContinenteDTO> continenteEntityList2DTOList(List<ContinenteEntity> entities) {
         List<ContinenteDTO> dtos = new ArrayList<>();
-        for (ContinenteEntity entity:entities){
+        for (ContinenteEntity entity : entities) {
             //transformo la entity a Dto por cada elem d la lista
             dtos.add(this.continenteEntity2TDO(entity));
         }
-    return dtos; // devuelvo una lista de DTOS
+        return dtos; // devuelvo una lista de DTOS
     }
+
+    public ContinenteDTO continenteEntity2TDO(ContinenteEntity entity) {
+        ContinenteDTO dto = new ContinenteDTO();
+        dto.setImagen(entity.getImagen());
+        dto.setId(entity.getId());
+        dto.setDenominacion(entity.getDenominacion());
+        return dto;
+    }
+
 
 }

@@ -8,6 +8,7 @@ import alkemy.Disney2.Disney2.service.ContinenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.List;
 
 @Service
@@ -15,16 +16,21 @@ import java.util.List;
 public class ContinenteServiceImpl implements ContinenteService {
 
     //Inyeccion de Clase ContinenteMapper  para que ni bien se levanta Spring lo pueda usar
-    @Autowired
+@Autowired
     private ContinenteMapper continenteMapper;
     //Inyeccion de repositorio "ContRep"  para que ni bien se levanta Spring lo pueda usar
     @Autowired
     private ContinenteRepository continenteRepository;
 
+    @Autowired
+    public ContinenteServiceImpl(ContinenteRepository continentRepository, ContinenteMapper continenteMapper) {
+        this.continenteRepository = continentRepository;
+        this.continenteMapper = continenteMapper;
+    }
 
     public ContinenteDTO save(ContinenteDTO dto) {
         //variable privada de la clase "ContMapper"
-        ContinenteEntity entity = continenteMapper.continenteDto2Entity(dto);
+        ContinenteEntity entity = continenteMapper.continenteDTO2Entity(dto);
         // guardo el  CONTINENTE como entity en BD y me lo quedo  en entitySaved para conv Entity2Dto
         ContinenteEntity entitySaved = continenteRepository.save(entity);
 //  conv  entitySaved de Entity2TDo a DTO y lo guardo en result
@@ -36,13 +42,43 @@ public class ContinenteServiceImpl implements ContinenteService {
     @Override
     public List<ContinenteDTO> getAllContinentes() {
         List<ContinenteEntity> entities = continenteRepository.findAll();
-        List<ContinenteDTO> result = continenteMapper.continenteEntityList2TDOList(entities);
+        List<ContinenteDTO> result = continenteMapper.continenteEntityList2DTOList(entities);
         return result;
     }
 
 
+    public ContinenteDTO update(Long id, ContinenteDTO continente) {
+        Optional<ContinenteEntity> oldEntity = Optional.of(this.continenteRepository.getById(id));
+        if (!oldEntity.isPresent()) {
+            System.out.println("icon id not valid"); // ?? EXcepcion??
+        } //Aca lo estoy dejando pasar igual si esta mal el dato-> corregir
+
+        ContinenteEntity newEntity = continenteMapper.continenteDTO2Entity(continente);
+        newEntity.setId(oldEntity.get().getId());
+        ContinenteEntity entitySaved = continenteRepository.save(newEntity);
+        ContinenteDTO result = continenteMapper.continenteEntity2TDO(entitySaved);
+        return result;
+    }
+
+
+    @Override
+    public ContinenteDTO getDetailsById(Long id) {
+        Optional<ContinenteEntity> entity = Optional.of(continenteRepository.getById(id));
+        if (!entity.isPresent()) {
+            System.out.println("COntinente id invalido"); // ?? EXcepcion??
+        }
+        ContinenteDTO continentDTO = this.continenteMapper.continenteEntity2TDO(entity.get());
+        return continentDTO;
+
+    }
+
     public void delete(Long id) {
-        this.continenteRepository.getById(id);
+        this.continenteRepository.deleteById(id);
+    }
+
+    @Override
+    public ContinenteDTO getContinenteById(Long id) {
+        return null;
     }
 
 }

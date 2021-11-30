@@ -64,6 +64,7 @@ public class IconServiceImpl implements IconService {
 
     }
 
+    @Override
     public void delete(Long id) {
 
          this.iconRepository.deleteById(id);

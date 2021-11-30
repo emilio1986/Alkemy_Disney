@@ -1,5 +1,6 @@
 package alkemy.Disney2.Disney2.service;
 
+import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
 import alkemy.Disney2.Disney2.dto.CiudadDTO;
 import alkemy.Disney2.Disney2.entity.CiudadEntity;
 
@@ -9,7 +10,7 @@ public interface CiudadService {
 
     CiudadDTO getDetailsById(Long id);
 
-    List<CiudadDTO> getAll();
+    List<CiudadBasicDTO> getAll();
 
     CiudadDTO save(CiudadDTO ciudadDTO);
 
@@ -22,4 +23,6 @@ public interface CiudadService {
     void delete(Long id);
 
     CiudadEntity getEntityById(Long idCiudad);
+
+
 }
