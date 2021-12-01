@@ -30,14 +30,14 @@ public class CiudadEntity {
     @Column(name = "cant_habitantes")  //cuando el nombre es = al d la tabla NO va @column
     private Long superficie; //m2
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)                         // 1 a n
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)  //CONSIDERAR QUITAR LA CASCADA POR EL BORRADO DE UNA CIUDAD Q PERTENECE A 1 CONT  // 1 a n
     @JoinColumn(name = "continente_id", insertable = false, updatable = false)
 
     // solo lo uso para obtener(get) info por eso false en update y demas-> se a q CONT  pertenece
-    private ContinenteEntity continente;                                               //variable/tabla   continente al cual pertenece la ciudad.ME trae el continente
+    private ContinenteEntity continente;      //variable/tabla   continente al cual pertenece la ciudad.ME trae el continente
 
     @Column(name = "continente_id", nullable = false)
-    private Long continenteId;                                      //defino la columna q no puede ser null y apunta a un cont
+    private Long continenteId;                                      //defino la columna q no puede ser null y apunta a un cont(FK)
 
     //soft Delete
     private boolean deleted = Boolean.FALSE;

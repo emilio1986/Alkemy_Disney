@@ -38,6 +38,7 @@ public class CiudadMapper {
         dto.setImagen(entity.getImagen());
         dto.setDenominacion(entity.getDenominacion());
         dto.setSuperficie(entity.getSuperficie());
+        dto.setContinenteId(entity.getContinenteId());
         if (loadIcons) {
             Set<IconDTO> iconsDTO = this.iconMapper.ciudadEntityList2DTO(entity.getIcons(), false);
             dto.setIcons(iconsDTO);

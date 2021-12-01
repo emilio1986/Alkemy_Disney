@@ -55,7 +55,7 @@ public class CiudadServiceImpl implements CiudadService {
         CiudadEntity entity = ciudadMapper.ciudadDTO2Entity(dto);
         CiudadEntity entidadGuardada = ciudadRepository.save(entity);
         CiudadDTO result;
-        result = ciudadMapper.ciudadEntity2DTO(true, entidadGuardada);
+        result = ciudadMapper.ciudadEntity2DTO(true, entidadGuardada);          //ANDA
         return result;
     }
 
@@ -67,12 +67,12 @@ public class CiudadServiceImpl implements CiudadService {
     }
 
     @Override
-    public CiudadDTO update(Long id, CiudadDTO icon) {
+    public CiudadDTO update(Long id, CiudadDTO ciudad) {
         Optional<CiudadEntity> entity = this.ciudadRepository.findById(id);
         //if (!entity.isPresent()) {
         //return (System.out.println(" ciudad Invalida ")); //??? Deberia ir una excepcion??
         //}
-        this.ciudadMapper.ciudadEntityRefreshValues(entity.get(), icon);
+        this.ciudadMapper.ciudadEntityRefreshValues(entity.get(), ciudad);
         CiudadEntity entidadAct = this.ciudadRepository.save(entity.get());
         CiudadDTO result = this.ciudadMapper.ciudadEntity2DTO(entidadAct, true);
         return result;

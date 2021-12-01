@@ -28,26 +28,26 @@ public class CiudadController {
 
     @GetMapping("/all")
     public ResponseEntity<List<CiudadBasicDTO>> getAll() {
-        List<CiudadBasicDTO> ciudades = this.ciudadService.getAll(); // REVISAR
+        List<CiudadBasicDTO> ciudades = this.ciudadService.getAll();               //PASS
         return ResponseEntity.ok(ciudades);
     }
 
     //tipo de solicitud
-    @GetMapping("/{id}")
+    @GetMapping("/{id}")                                                            //PASS
     public ResponseEntity<CiudadDTO> getDetailsById(@PathVariable Long id ) {
         CiudadDTO ciudad = this.ciudadService.getDetailsById(id);
-        return ResponseEntity.ok(ciudad);  //devuelvo la ciudad a mostrar
+        return ResponseEntity.ok(ciudad);
     }
 
 
     @PostMapping
     public ResponseEntity<CiudadDTO> save(@RequestBody CiudadDTO ciudad) {
         CiudadDTO result = this.ciudadService.save(ciudad);
-        return ResponseEntity.status((HttpStatus.CREATED)).body(result);  //devuelvo el CiudadDto que ya guarde en BD
+        return ResponseEntity.status((HttpStatus.CREATED)).body(result);           //PASS
 
     }
 
-    @PostMapping("/{id}/icons/{idIcon}")   //-> Icons se usa pra darle semantica  la URL
+    @PostMapping("/{id}/icons/{idIcon}") //-> icons se usa pra darle semantica  la URL(NO ES VARIABLE)
     public ResponseEntity<Void> addIcon(@PathVariable Long id, @PathVariable Long idIcon) {
 
         this.ciudadService.addICon(id, idIcon);
@@ -55,7 +55,7 @@ public class CiudadController {
 
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}")                                                           //PASS
     public ResponseEntity<CiudadDTO> update(@PathVariable Long id, @RequestBody CiudadDTO ciudad) {
         CiudadDTO result = this.ciudadService.update(id, ciudad);
         return ResponseEntity.ok().body(result);
@@ -64,13 +64,13 @@ public class CiudadController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {                     //RESOLVER CASCADA CONTINENTE
         this.ciudadService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 
-    @DeleteMapping("/{id}/icons/{idIcon}")
+    @DeleteMapping("/{id}/icons/{idIcon}")                                           //CHEQUEAR
     public ResponseEntity<Void> delete(@PathVariable Long id, @PathVariable Long idIcon) {
         this.ciudadService.removeIcon(id, idIcon);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

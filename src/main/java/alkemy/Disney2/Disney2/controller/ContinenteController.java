@@ -21,35 +21,32 @@ public class ContinenteController {
 
     //tipo de solicitud
     @PostMapping
-    public ResponseEntity<ContinenteDTO>  save(@RequestBody ContinenteDTO continente){
+    public ResponseEntity<ContinenteDTO> save(@RequestBody ContinenteDTO continente) {              //PASS
         ContinenteDTO continenteGuardado = continenteService.save(continente);
-         return ResponseEntity.status(HttpStatus.CREATED).body(continenteGuardado); //devuelvo el continente guardado
+        return ResponseEntity.status(HttpStatus.CREATED).body(continenteGuardado);
     }
 
     @GetMapping
-    public  ResponseEntity<List<ContinenteDTO>> getAll(){
+    public ResponseEntity<List<ContinenteDTO>> getAll() {
 
-        List<ContinenteDTO> continentes = this.continenteService.getAllContinentes();
+        List<ContinenteDTO> continentes = this.continenteService.getAllContinentes();                //PASS
         return ResponseEntity.ok().body(continentes);
     }
 
     @GetMapping("/{id}")
-    public  ResponseEntity<ContinenteDTO> getContById(@PathVariable Long id){
-        ContinenteDTO continente;
-        continente = this.continenteService.getContinenteById(id);
+    public ResponseEntity<ContinenteDTO> getContById(@PathVariable Long id) {                     //PASS
+        ContinenteDTO continente = this.continenteService.getContinenteById(id);
         return ResponseEntity.ok().body(continente);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ContinenteDTO> update (@PathVariable Long id,
-            @RequestBody ContinenteDTO continente) {
+    @PutMapping("/{id}")                                                                          //PASS
+    public ResponseEntity<ContinenteDTO> update(@PathVariable Long id, @RequestBody ContinenteDTO continente) {
         ContinenteDTO result = this.continenteService.update(id, continente);
         return ResponseEntity.ok(result);
     }
 
 
-
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")                                                                     //PASS
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         this.continenteService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -58,5 +55,5 @@ public class ContinenteController {
 
 }
 
-// forma  de acceso al endpoint -> POST localhost/continente
-//solamente recibe una solicitud aca y manda una RTA
+// Forma  de acceso al endpoint -> POST localhost/continente-> "CREO UN CONTINENTE"
+
