@@ -58,16 +58,7 @@ public class ContinenteServiceImpl implements ContinenteService {
     }
 
 
-    @Override
-    public ContinenteDTO getDetailsById(Long id) {
-        Optional<ContinenteEntity> entity = Optional.of(continenteRepository.getById(id));
-        //if (!entity.isPresent()) {
-        //  System.out.println("Continente id invalido"); // ?? Excepcion??
-        // }
-        ContinenteDTO continentDTO = this.continenteMapper.continenteEntity2TDO(entity.get());
-        return continentDTO;
 
-    }
 
     public void delete(Long id) {
         this.continenteRepository.deleteById(id);

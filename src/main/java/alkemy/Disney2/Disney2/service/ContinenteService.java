@@ -14,7 +14,7 @@ public interface ContinenteService {
 
      ContinenteDTO getContinenteById(Long id);
 
-    ContinenteDTO getDetailsById(Long id);
+    //ContinenteDTO getDetailsById(Long id);
 
     ContinenteDTO update(Long id, ContinenteDTO continente);
 }

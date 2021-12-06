@@ -10,7 +10,9 @@ public interface IconService {
 
     IconDTO getDetailsById(Long id);
 
-    List<IconBasicDTO> getAll();
+    List<IconBasicDTO> getAllBasics();
+
+    List<IconDTO> getAll();
 
     IconDTO save(IconDTO iconDTO);
 

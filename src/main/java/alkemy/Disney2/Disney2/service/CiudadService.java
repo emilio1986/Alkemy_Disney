@@ -3,6 +3,7 @@ package alkemy.Disney2.Disney2.service;
 import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
 import alkemy.Disney2.Disney2.dto.CiudadDTO;
 import alkemy.Disney2.Disney2.entity.CiudadEntity;
+import alkemy.Disney2.Disney2.entity.IconEntity;
 
 import java.util.List;
 
@@ -23,6 +24,4 @@ public interface CiudadService {
     void delete(Long id);
 
     CiudadEntity getEntityById(Long idCiudad);
-
-
 }

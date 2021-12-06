@@ -2,11 +2,11 @@ package alkemy.Disney2.Disney2.mapper;
 
 import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
 import alkemy.Disney2.Disney2.dto.CiudadDTO;
-import alkemy.Disney2.Disney2.dto.IconBasicDTO;
 import alkemy.Disney2.Disney2.dto.IconDTO;
 import alkemy.Disney2.Disney2.entity.CiudadEntity;
 import alkemy.Disney2.Disney2.entity.IconEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -16,8 +16,13 @@ import java.util.*;
 @Component
 public class CiudadMapper {
 
-    @Autowired
-    private IconMapper iconMapper;
+@Autowired
+    private  IconMapper iconMapper;
+
+@Autowired
+    public CiudadMapper( @Lazy IconMapper iconMapper) {
+        this.iconMapper = iconMapper;
+    }
 
 
     public CiudadEntity ciudadDTO2Entity(CiudadDTO dto) {
@@ -37,10 +42,10 @@ public class CiudadMapper {
         dto.setId(entity.getId());
         dto.setImagen(entity.getImagen());
         dto.setDenominacion(entity.getDenominacion());
-        dto.setSuperficie(entity.getSuperficie());
+        dto.setSuperficie(entity.getSuperficie());           //deberia setearle la cant habitantes tb
         dto.setContinenteId(entity.getContinenteId());
         if (loadIcons) {
-            Set<IconDTO> iconsDTO = this.iconMapper.ciudadEntityList2DTO(entity.getIcons(), false);
+            Set<IconDTO> iconsDTO = this.iconMapper.ciudadEntityList2DTO(entity.getIcons(), true);
             dto.setIcons(iconsDTO);
         }
         return dto;
@@ -65,8 +70,9 @@ public class CiudadMapper {
         return entities;
     }
 
-    private IconEntity iconDTO2Entity(IconDTO dto) {
-        return null;
+    public IconEntity iconDTO2Entity(IconDTO dto) {
+
+    return null;
     }
 
 
@@ -112,10 +118,6 @@ public class CiudadMapper {
     }
 
 
-    public List<CiudadBasicDTO> ciudadesEntityList2BasicDTOList(List<CiudadEntity> entities) {
-        return null;
-    }
-
     public CiudadDTO ciudadEntity2DTO(boolean loadIcons, CiudadEntity entidadGuardada) {
         CiudadDTO dto = new CiudadDTO();
         dto.setId(entidadGuardada.getId());
@@ -130,4 +132,6 @@ public class CiudadMapper {
         dto.setContinenteId(entidadGuardada.getContinenteId());
         return dto;
     }
+
+
 }

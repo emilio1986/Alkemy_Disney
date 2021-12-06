@@ -31,7 +31,7 @@ public class IconEntity {
     private String denominacion;
 
     @Column(name = "fecha_creacion")
-    @DateTimeFormat(pattern = "yyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate fechaCreacion;
 
     private Long altura;
@@ -42,7 +42,7 @@ public class IconEntity {
     private boolean deleted = Boolean.FALSE;
 
     @ManyToMany(mappedBy = "icons", cascade = CascadeType.ALL)
-    //lsita de ciudades
+
     private List<CiudadEntity> ciudades = new ArrayList<>();
 
     public void addCiudad(CiudadEntity ciudad) {

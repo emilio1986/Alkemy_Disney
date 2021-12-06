@@ -6,6 +6,7 @@ import alkemy.Disney2.Disney2.dto.IconDTO;
 import alkemy.Disney2.Disney2.service.ContinenteService;
 import alkemy.Disney2.Disney2.service.IconService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,20 +17,21 @@ import java.util.List;
 @RequestMapping("icons")
 public class IconController {
 
-    @Autowired
+
     private IconService iconService;        //Interfaz
 
     @Autowired
     //me llega un IconService y se lo asigno a mi iconService
-    public IconController(IconService iconService) {
+    public IconController( IconService iconService) {
+
         this.iconService = iconService;
     }
 
-    @PostMapping("/{id}")
+
+    @PostMapping
     public ResponseEntity<IconDTO> save(@RequestBody IconDTO icon) {
         IconDTO result = this.iconService.save(icon);
-        return ResponseEntity.ok().body(result);  //devuelvo el IconDto que ya guarde en BD
-
+        return ResponseEntity.ok().body(result);             //devuelvo el IconDto que ya guarde en BD
     }
 
     @PostMapping("/{id}/ciudad/idCiudad")
@@ -62,11 +64,18 @@ public class IconController {
     }
 
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<IconBasicDTO>> getAll() {
-        List<IconBasicDTO> icons = this.iconService.getAll();
+        List<IconBasicDTO> icons = this.iconService.getAllBasics();
         return ResponseEntity.ok(icons);
     }
+
+    //@GetMapping
+   // public ResponseEntity<List<IconDTO>> getAllBasics() {
+     //   List<IconDTO> icons = this.iconService.getAll();
+       // return ResponseEntity.ok(icons);
+    //}
+    
 
     //tipo de solicitud
     @GetMapping("/{id}")

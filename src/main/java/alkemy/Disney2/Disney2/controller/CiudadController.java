@@ -1,5 +1,6 @@
 package alkemy.Disney2.Disney2.controller;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +17,11 @@ import java.util.List;
 @RequestMapping("ciudades")
 public class CiudadController {
 
-
+    @Autowired
     private CiudadService ciudadService; //Interfaz
 
     @Autowired
-    public CiudadController(CiudadService ciudadService) {
+    public CiudadController(@Lazy CiudadService ciudadService) {
 
         this.ciudadService = ciudadService;
     }

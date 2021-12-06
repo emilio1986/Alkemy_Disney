@@ -1,5 +1,7 @@
 package alkemy.Disney2.Disney2.service.impl;
 
+import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
+import alkemy.Disney2.Disney2.dto.CiudadDTO;
 import alkemy.Disney2.Disney2.dto.IconBasicDTO;
 import alkemy.Disney2.Disney2.dto.IconDTO;
 import alkemy.Disney2.Disney2.entity.CiudadEntity;
@@ -8,10 +10,11 @@ import alkemy.Disney2.Disney2.mapper.IconMapper;
 import alkemy.Disney2.Disney2.repository.IconRepository;
 import alkemy.Disney2.Disney2.service.IconService;
 import org.springframework.beans.factory.annotation.Autowired;
-import  alkemy.Disney2.Disney2.service.CiudadService;
+import alkemy.Disney2.Disney2.service.CiudadService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class IconServiceImpl implements IconService {
@@ -22,25 +25,60 @@ public class IconServiceImpl implements IconService {
 
     @Autowired
     private IconRepository iconRepository;
+    @Autowired
+    private IconMapper iconMapper;
 
-    @Override
-    public IconDTO getDetailsById(Long id) {
-        return null;
+    public IconServiceImpl(IconRepository iconRepository, IconMapper iconMapper) {
+        this.iconRepository = iconRepository;
+        this.iconMapper = iconMapper;
     }
 
     @Override
-    public List<IconBasicDTO> getAll() {
-        return null;
+    public IconDTO getDetailsById(Long id) {
+
+        IconEntity entity = this.iconRepository.getById(id);
+        IconDTO dtoIcons = this.iconMapper.iconEntity2DTO(entity, true);
+        return dtoIcons;
+
+
+    }
+
+
+    @Override
+    public List<IconBasicDTO> getAllBasics() {
+        List<IconEntity> entities = this.iconRepository.findAll();
+        List<IconBasicDTO> iconBasicDTOS = iconMapper.iconEntityList2BasicDTOList(entities);
+        return iconBasicDTOS;
+    }
+
+    @Override
+    public List<IconDTO> getAll() {
+        List<IconEntity> entities = this.iconRepository.findAll();
+        List<IconDTO> iconDTOS = iconMapper.iconEntityList2DTOList(entities);
+        return iconDTOS;
     }
 
     @Override
     public IconDTO save(IconDTO iconDTO) {
-        return null;
+
+        IconEntity entity = iconMapper.iconDTO2Entity(iconDTO);
+        IconEntity entidadGuardada = iconRepository.save(entity);
+        IconDTO result;
+        result = iconMapper.iconEntity2DTO(entidadGuardada, true);          //ANDA
+        return result;
+
     }
 
     @Override
     public IconDTO update(Long id, IconDTO icon) {
-        return null;
+        Optional<IconEntity> entity = this.iconRepository.findById(id);
+        // if (!entity.isPresent()) {
+        //   throw new ParamNotFound("city id not valid");
+        //}
+        this.iconMapper.iconEntityRefreshValues(entity.get(), icon);
+        IconEntity updatedEntity = this.iconRepository.save(entity.get());
+        IconDTO result = this.iconMapper.iconEntity2DTO(updatedEntity, true);
+        return result;
     }
 
 
@@ -64,10 +102,11 @@ public class IconServiceImpl implements IconService {
 
     }
 
+
     @Override
     public void delete(Long id) {
 
-         this.iconRepository.deleteById(id);
+        this.iconRepository.deleteById(id);
 
     }
 
