@@ -5,6 +5,8 @@ package alkemy.Disney2.Disney2.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class ContinenteDTO {
@@ -12,4 +14,10 @@ public class ContinenteDTO {
     private long id;
     private String imagen;
     private String denominacion;
+    private List<CiudadDTO> ciudades;                   //Agregado ahora
+
+    public  void agregarCiudadDTO(CiudadDTO ciudadDTO){ //Agregado ahora
+
+        this.ciudades.add(ciudadDTO);               //Agregado ahora
+    }
 }

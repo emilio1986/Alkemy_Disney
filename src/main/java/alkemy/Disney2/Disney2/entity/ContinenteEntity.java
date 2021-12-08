@@ -29,9 +29,13 @@ public class ContinenteEntity {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)     // 1 a n
     @JoinColumn(name = "id", insertable = false, updatable = false) // solo lo uso para obtener(get) las ciudades
-
     private List<CiudadEntity> ciudades = new ArrayList<>();  // coleccion de ciudades que contiene el continente
 
     //campo Soft delete
     private boolean deleted = Boolean.FALSE;
+
+
+    public void addCiudad(CiudadEntity ciudadEntity) {
+        this.ciudades.add(ciudadEntity);
+    }
 }

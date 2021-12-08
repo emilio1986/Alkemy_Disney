@@ -48,7 +48,7 @@ public class CiudadController {
 
     }
 
-    @PostMapping("/{id}/icons/{idIcon}") //-> icons se usa pra darle semantica  la URL(NO ES VARIABLE)
+    @PostMapping("/{id}/icons/{idIcon}")                        //-> icons se usa pra darle semantica  la URL(NO ES VARIABLE)
     public ResponseEntity<Void> addIcon(@PathVariable Long id, @PathVariable Long idIcon) {
 
         this.ciudadService.addICon(id, idIcon);

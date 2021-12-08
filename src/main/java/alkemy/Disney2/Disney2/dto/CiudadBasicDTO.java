@@ -16,7 +16,7 @@ public class CiudadBasicDTO {
     private Long id;
     private String title;
     private String imageUrl;
-    private String cantHabitantes;
+    private Long cantHabitantes;
 }
 
 

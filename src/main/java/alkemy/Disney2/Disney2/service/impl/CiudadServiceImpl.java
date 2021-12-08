@@ -1,17 +1,16 @@
 package alkemy.Disney2.Disney2.service.impl;
-
 import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
 import alkemy.Disney2.Disney2.dto.CiudadDTO;
-import alkemy.Disney2.Disney2.dto.ContinenteDTO;
-import alkemy.Disney2.Disney2.entity.ContinenteEntity;
-import org.springframework.stereotype.Service;
 import alkemy.Disney2.Disney2.entity.CiudadEntity;
+import alkemy.Disney2.Disney2.entity.ContinenteEntity;
 import alkemy.Disney2.Disney2.entity.IconEntity;
 import alkemy.Disney2.Disney2.mapper.CiudadMapper;
 import alkemy.Disney2.Disney2.repository.CiudadRepository;
+import alkemy.Disney2.Disney2.repository.ContinenteRepository;
 import alkemy.Disney2.Disney2.service.CiudadService;
-import org.springframework.beans.factory.annotation.Autowired;
 import alkemy.Disney2.Disney2.service.IconService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +18,6 @@ import java.util.Optional;
 
 @Service
 public class CiudadServiceImpl implements CiudadService {
-
-////////////////////////////////////////////////////////
-
-    //Inyeccion de repositorio "CiudadRep"  para que ni bien se levanta Spring lo pueda usar
 
 
     private CiudadRepository ciudadRepository;
@@ -33,23 +28,27 @@ public class CiudadServiceImpl implements CiudadService {
 
     private IconService iconService;
 
+    private ContinenteRepository continenteRepository;            //agregar la ciudad al cont cuando se crea?
+
+
     @Autowired
     public CiudadServiceImpl(
             CiudadRepository ciudadRepository,
             CiudadMapper ciudadMapper,
-            IconService iconService
+            IconService iconService,
+            ContinenteRepository continenteRepository
+
     ) {
         this.ciudadRepository = ciudadRepository;
-
         this.ciudadMapper = ciudadMapper;
         this.iconService = iconService;
+        this.continenteRepository = continenteRepository;
     }
 
 
     @Override
     public CiudadDTO getDetailsById(Long id) {
-        Optional<CiudadEntity> entity = Optional.of(ciudadRepository.getById(id));        // ESTE ESTA DEVOLVIENDO EL CONT_ID_TAMBIEN
-
+        Optional<CiudadEntity> entity = Optional.of(ciudadRepository.getById(id));
         CiudadDTO ciudadDTO = this.ciudadMapper.ciudadEntity2DTO(entity.get(), true);
         return ciudadDTO;
     }
@@ -59,9 +58,11 @@ public class CiudadServiceImpl implements CiudadService {
     public CiudadDTO save(CiudadDTO dto) {
 
         CiudadEntity entity = ciudadMapper.ciudadDTO2Entity(dto);
-        CiudadEntity entidadGuardada = ciudadRepository.save(entity);
+        CiudadEntity entidadGuardada = ciudadRepository.save(entity);                               //RESOLVER
+        ContinenteEntity continente = continenteRepository.getById(entity.getContinenteId());   //guardamos la ciudad
+        continente.addCiudad(entidadGuardada);                                                    //guardamos la ciudad
         CiudadDTO result;
-        result = ciudadMapper.ciudadEntity2DTO(true, entidadGuardada);          //ANDA
+        result = ciudadMapper.ciudadEntity2DTO(true, entidadGuardada);
         return result;
     }
 
@@ -75,8 +76,8 @@ public class CiudadServiceImpl implements CiudadService {
     @Override
     public CiudadDTO update(Long id, CiudadDTO ciudad) {
         Optional<CiudadEntity> entity = this.ciudadRepository.findById(id);
-       // if (!entity.isPresent()) {
-         //   throw new ParamNotFound("city id not valid");
+        // if (!entity.isPresent()) {
+        //   throw new ParamNotFound("city id not valid");
         //}
         this.ciudadMapper.ciudadEntityRefreshValues(entity.get(), ciudad);
         CiudadEntity updatedEntity = this.ciudadRepository.save(entity.get());

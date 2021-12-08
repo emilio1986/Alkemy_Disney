@@ -1,8 +1,10 @@
 package alkemy.Disney2.Disney2.mapper;
 
+import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
 import alkemy.Disney2.Disney2.dto.CiudadDTO;
 import alkemy.Disney2.Disney2.dto.IconBasicDTO;
 import alkemy.Disney2.Disney2.dto.IconDTO;
+import alkemy.Disney2.Disney2.entity.CiudadEntity;
 import alkemy.Disney2.Disney2.entity.IconEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -18,7 +20,7 @@ public class IconMapper {
     private CiudadMapper ciudadMapper;
 
     @Autowired
-    public IconMapper( @Lazy CiudadMapper ciudadMapper) {
+    public IconMapper(@Lazy CiudadMapper ciudadMapper) {
         this.ciudadMapper = ciudadMapper;
     }
 
@@ -33,7 +35,7 @@ public class IconMapper {
     }
 
 
-    public IconDTO iconEntity2DTO(IconEntity entity, boolean loadCiudades) {
+    public IconDTO iconEntity2DTO(IconEntity entity, boolean loadCiudades) {                             //pasar en false paraq corte la carga
 
         IconDTO dto = new IconDTO();
         dto.setId(entity.getId());
@@ -43,7 +45,7 @@ public class IconMapper {
         dto.setHistoria(entity.getHistoria());
         if (loadCiudades) {
             // lo seteo en F para evitar la red ciclica
-            List<CiudadDTO> ciudadesDTO = this.ciudadMapper.ciudadEntityList2DTOList(entity.getCiudades(), true);
+            List<CiudadDTO> ciudadesDTO = this.ciudadMapper.ciudadEntityList2DTOList(entity.getCiudades(), false);
             dto.setCiudadades(ciudadesDTO);
         }
         return dto;
@@ -102,7 +104,11 @@ public class IconMapper {
 
 
     public Set<IconDTO> ciudadEntityList2DTO(Set<IconEntity> icons, boolean loadIcons) {
-        return null; //codear
+        Set<IconDTO> dtos = new HashSet<>();
+        for (IconEntity entities:icons){
+            dtos.add(this.iconEntity2DTO(entities, loadIcons));
+        }
+        return dtos;
     }
 
     public List<IconDTO> iconEntitySet2DTOList(Set<IconEntity> icons, boolean loadIcons) {
@@ -130,7 +136,7 @@ public class IconMapper {
         List<IconDTO> dtos = new ArrayList<>();
         IconDTO iconDTO;
         for (IconEntity entity : entities) {
-             iconDTO = new IconDTO();
+            iconDTO = new IconDTO();
             iconDTO.setId(entity.getId());
             iconDTO.setDenominacion(entity.getDenominacion());
             iconDTO.setImagen(entity.getImagen());

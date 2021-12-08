@@ -1,16 +1,15 @@
 package alkemy.Disney2.Disney2.service.impl;
 
-import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
-import alkemy.Disney2.Disney2.dto.CiudadDTO;
+
 import alkemy.Disney2.Disney2.dto.IconBasicDTO;
 import alkemy.Disney2.Disney2.dto.IconDTO;
-import alkemy.Disney2.Disney2.entity.CiudadEntity;
 import alkemy.Disney2.Disney2.entity.IconEntity;
 import alkemy.Disney2.Disney2.mapper.IconMapper;
 import alkemy.Disney2.Disney2.repository.IconRepository;
+import alkemy.Disney2.Disney2.service.CiudadService;
 import alkemy.Disney2.Disney2.service.IconService;
 import org.springframework.beans.factory.annotation.Autowired;
-import alkemy.Disney2.Disney2.service.CiudadService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,16 +20,19 @@ public class IconServiceImpl implements IconService {
 
     //ESTE ESTA BIEN
 
-    public CiudadService ciudadService;
 
-    @Autowired
     private IconRepository iconRepository;
-    @Autowired
+
     private IconMapper iconMapper;
 
-    public IconServiceImpl(IconRepository iconRepository, IconMapper iconMapper) {
+    private CiudadService ciudadService;
+
+    @Autowired
+    public IconServiceImpl(@Lazy IconRepository iconRepository, IconMapper iconMapper) {
         this.iconRepository = iconRepository;
         this.iconMapper = iconMapper;
+
+
     }
 
     @Override
@@ -64,7 +66,7 @@ public class IconServiceImpl implements IconService {
         IconEntity entity = iconMapper.iconDTO2Entity(iconDTO);
         IconEntity entidadGuardada = iconRepository.save(entity);
         IconDTO result;
-        result = iconMapper.iconEntity2DTO(entidadGuardada, true);          //ANDA
+        result = iconMapper.iconEntity2DTO(entidadGuardada, true);
         return result;
 
     }
@@ -73,33 +75,12 @@ public class IconServiceImpl implements IconService {
     public IconDTO update(Long id, IconDTO icon) {
         Optional<IconEntity> entity = this.iconRepository.findById(id);
         // if (!entity.isPresent()) {
-        //   throw new ParamNotFound("city id not valid");
+        //   throw new ParamNotFound("Ciudad id invalido");
         //}
         this.iconMapper.iconEntityRefreshValues(entity.get(), icon);
         IconEntity updatedEntity = this.iconRepository.save(entity.get());
         IconDTO result = this.iconMapper.iconEntity2DTO(updatedEntity, true);
         return result;
-    }
-
-
-    public IconDTO update(Long id, Long idCiudad) {
-        return null;
-    }
-
-    @Override
-    public void addCiudad(Long id, Long idCiudad) {
-
-    }
-
-    @Override
-    public void removeCiudad(Long id, Long idCiudad) {
-        //busco el id de la ciudad a borrar en la base
-        IconEntity entity = this.iconRepository.getById(id);
-        entity.getCiudades().size();
-        CiudadEntity ciudadEntity = this.ciudadService.getEntityById(idCiudad);
-        entity.removeCiudad(ciudadEntity);
-        this.iconRepository.save(entity);
-
     }
 
 
@@ -112,6 +93,8 @@ public class IconServiceImpl implements IconService {
 
     @Override
     public IconEntity getEntityById(Long idIcon) {
-        return null;//codear
+        return this.iconRepository.getById(idIcon);
     }
+
+
 }

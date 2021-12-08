@@ -16,6 +16,8 @@ public class CiudadDTO {
     private Long superficie;
     private Set<IconDTO> icons;
     private Long continenteId ;
+    private Long cantHabitantes;
+
 }
 
 

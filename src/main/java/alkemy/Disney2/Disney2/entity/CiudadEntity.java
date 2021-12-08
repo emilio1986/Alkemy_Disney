@@ -2,7 +2,6 @@ package alkemy.Disney2.Disney2.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -28,13 +27,16 @@ public class CiudadEntity {
     private String denominacion;
 
     @Column(name = "cant_habitantes")               //cuando el nombre es = al d la tabla NO va @column
-    private Long superficie; //m2
+    private Long cantHabitantes;                        //m2 aca estaba la linea
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)      //CONSIDERAR QUITAR LA CASCADA POR EL BORRADO DE UNA CIUDAD Q PERTENECE A 1 CONT  // 1 a n
+    @Column(name = "superficie")
+    private Long superficie;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    //CONSIDERAR QUITAR LA CASCADA POR EL BORRADO DE UNA CIUDAD Q PERTENECE A 1 CONT  // 1 a n
     @JoinColumn(name = "continente_id", insertable = false, updatable = false)
 
-    // solo lo uso para obtener(get) info por eso false en update y demas-> se a q CONT  pertenece
-    private ContinenteEntity continente;      //variable/tabla   continente al cual pertenece la ciudad.ME trae el continente
+    private ContinenteEntity continente ;
 
     @Column(name = "continente_id", nullable = false)
     private Long continenteId;                                      //defino la columna q no puede ser null y apunta a un cont(FK)
@@ -48,9 +50,9 @@ public class CiudadEntity {
                     CascadeType.MERGE
             })
     @JoinTable(
-            name = "icon_ciudad",                                   // nombre de la tabla INTERMEDIA
-            joinColumns = @JoinColumn(name = "ciudad_id"),          //como joinea de este lado
-            inverseJoinColumns = @JoinColumn(name = "icon_id"))    // como joinea del otro lado(Icon)
+            name = "icon_ciudad",                                                               // nombre de la tabla INTERMEDIA
+            joinColumns = @JoinColumn(name = "ciudad_id"),                  //como joinea de este lado
+            inverseJoinColumns = @JoinColumn(name = "icon_id"))           // como joinea del otro lado(Icon)
 
     private Set<IconEntity> icons = new HashSet<>();
 
@@ -64,9 +66,11 @@ public class CiudadEntity {
     }
 
     public void removeIcon(IconEntity iconEntity) {
+        this.icons.remove(iconEntity);
     }
 
     public void addIcon(IconEntity iconEntity) {
+        this.icons.add(iconEntity);
     }
 }
 

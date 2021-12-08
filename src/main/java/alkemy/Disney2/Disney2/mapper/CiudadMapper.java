@@ -11,16 +11,21 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Component
 public class CiudadMapper {
 
-@Autowired
-    private  IconMapper iconMapper;
+    @Autowired
+    private IconMapper iconMapper;
 
-@Autowired
-    public CiudadMapper( @Lazy IconMapper iconMapper) {
+    //private ContinenteMapper continenteMapper;                    //agregado ahora
+
+    @Autowired
+    public CiudadMapper(@Lazy IconMapper iconMapper) {
         this.iconMapper = iconMapper;
     }
 
@@ -28,7 +33,7 @@ public class CiudadMapper {
     public CiudadEntity ciudadDTO2Entity(CiudadDTO dto) {
         CiudadEntity ciudadEntity = new CiudadEntity();
         ciudadEntity.setDenominacion(dto.getDenominacion());
-        // cityEntity.setHabitantes(dto.getHabitantes()); AGREGAR
+        ciudadEntity.setCantHabitantes(dto.getCantHabitantes());
         ciudadEntity.setSuperficie(dto.getSuperficie());
         ciudadEntity.setImagen(dto.getImagen());
         ciudadEntity.setContinenteId(dto.getContinenteId());
@@ -42,10 +47,11 @@ public class CiudadMapper {
         dto.setId(entity.getId());
         dto.setImagen(entity.getImagen());
         dto.setDenominacion(entity.getDenominacion());
-        dto.setSuperficie(entity.getSuperficie());           //deberia setearle la cant habitantes tb
+        dto.setSuperficie(entity.getSuperficie());
+        dto.setCantHabitantes(entity.getCantHabitantes());
         dto.setContinenteId(entity.getContinenteId());
         if (loadIcons) {
-            Set<IconDTO> iconsDTO = this.iconMapper.ciudadEntityList2DTO(entity.getIcons(), true);
+            Set<IconDTO> iconsDTO = this.iconMapper.ciudadEntityList2DTO(entity.getIcons(), false);
             dto.setIcons(iconsDTO);
         }
         return dto;
@@ -72,7 +78,7 @@ public class CiudadMapper {
 
     public IconEntity iconDTO2Entity(IconDTO dto) {
 
-    return null;
+        return null;
     }
 
 
@@ -112,6 +118,7 @@ public class CiudadMapper {
             basicDTO.setId(entity.getId());
             basicDTO.setTitle(entity.getDenominacion());
             basicDTO.setImageUrl(entity.getImagen());
+            basicDTO.setCantHabitantes(entity.getCantHabitantes());
             dtos.add(basicDTO);
         }
         return dtos;
@@ -120,7 +127,9 @@ public class CiudadMapper {
 
     public CiudadDTO ciudadEntity2DTO(boolean loadIcons, CiudadEntity entidadGuardada) {
         CiudadDTO dto = new CiudadDTO();
+
         dto.setId(entidadGuardada.getId());
+
         dto.setDenominacion(entidadGuardada.getDenominacion());
         // dto.setHabitantes(entity.getHabitantes);      //Agregar tabla
         dto.setSuperficie(entidadGuardada.getSuperficie());
@@ -130,6 +139,7 @@ public class CiudadMapper {
         }
         dto.setImagen(entidadGuardada.getImagen());
         dto.setContinenteId(entidadGuardada.getContinenteId());
+        //contDTO.agregarCiudadDTO(dto);                           //la agrego antes de que la devuelva
         return dto;
     }
 

@@ -18,9 +18,6 @@ public interface IconService {
 
     IconDTO update(Long id, IconDTO icon);
 
-    void addCiudad(Long id, Long idCiudad);
-
-    void removeCiudad(Long id, Long idCiudad);
 
     void delete(Long id);
 
