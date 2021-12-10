@@ -29,7 +29,7 @@ public class IconMapper {
         IconEntity entity = new IconEntity();
         entity.setImagen(dto.getImagen());
         entity.setDenominacion(dto.getDenominacion());
-        entity.setFechaCreacion(this.string2LocalDate(dto.getFechaCreacion()));
+        entity.setFechaCreacion(this.string2LocalDate(dto.getFechaCreacion()).toString());
         entity.setHistoria(dto.getHistoria());
         return entity;
     }
@@ -64,7 +64,7 @@ public class IconMapper {
 
         entity.setImagen(iconDTO.getImagen());
         entity.setDenominacion(iconDTO.getDenominacion());
-        entity.setFechaCreacion(this.string2LocalDate(iconDTO.getFechaCreacion()));
+        entity.setFechaCreacion(this.string2LocalDate(iconDTO.getFechaCreacion()).toString());
         // FALTA altura en BD-> entity.setAltura(iconDTO.getAltua());
         entity.setHistoria(iconDTO.getHistoria());
     }

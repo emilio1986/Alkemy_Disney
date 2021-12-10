@@ -5,6 +5,7 @@ import alkemy.Disney2.Disney2.dto.CiudadDTO;
 import alkemy.Disney2.Disney2.dto.IconDTO;
 import alkemy.Disney2.Disney2.entity.CiudadEntity;
 import alkemy.Disney2.Disney2.entity.IconEntity;
+import alkemy.Disney2.Disney2.repository.IconRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -21,12 +22,12 @@ public class CiudadMapper {
 
     @Autowired
     private IconMapper iconMapper;
-
-    //private ContinenteMapper continenteMapper;                    //agregado ahora
+    private IconRepository iconRepository;
 
     @Autowired
-    public CiudadMapper(@Lazy IconMapper iconMapper) {
+    public CiudadMapper(@Lazy IconMapper iconMapper, IconRepository iconRepository) {
         this.iconMapper = iconMapper;
+        this.iconRepository = iconRepository;
     }
 
 
@@ -78,7 +79,13 @@ public class CiudadMapper {
 
     public IconEntity iconDTO2Entity(IconDTO dto) {
 
-        return null;
+        IconEntity iconEnt = this.iconRepository.getById(dto.getId());
+        iconEnt.setHistoria(dto.getHistoria());
+        iconEnt.setFechaCreacion(dto.getFechaCreacion());
+        iconEnt.setDenominacion(dto.getDenominacion());            //ojo este metodo intentando mostrar ciudades de CONT
+        iconEnt.setId(dto.getId());
+
+        return iconEnt;
     }
 
 
@@ -104,7 +111,7 @@ public class CiudadMapper {
 
     public void ciudadEntityRefreshValues(CiudadEntity entity, CiudadDTO dto) {
         entity.setDenominacion(dto.getDenominacion());
-        //entity.set(dto.getPopulation());//falto tabla habitantes
+
         entity.setSuperficie(dto.getSuperficie());
         entity.setContinenteId(dto.getContinenteId());
         entity.setImagen(dto.getImagen());
@@ -131,7 +138,7 @@ public class CiudadMapper {
         dto.setId(entidadGuardada.getId());
 
         dto.setDenominacion(entidadGuardada.getDenominacion());
-        // dto.setHabitantes(entity.getHabitantes);      //Agregar tabla
+
         dto.setSuperficie(entidadGuardada.getSuperficie());
         if (loadIcons) {
             List<IconDTO> iconDTOS = this.iconMapper.iconEntitySet2DTOList(entidadGuardada.getIcons(), loadIcons);
@@ -139,9 +146,21 @@ public class CiudadMapper {
         }
         dto.setImagen(entidadGuardada.getImagen());
         dto.setContinenteId(entidadGuardada.getContinenteId());
-        //contDTO.agregarCiudadDTO(dto);                           //la agrego antes de que la devuelva
+
         return dto;
     }
 
 
+    public List<CiudadDTO> continenteEntityList2DTO(List<CiudadEntity> ciudades, boolean loadIcons) {
+
+        List<CiudadDTO> dtos = new ArrayList<>();
+        for (CiudadEntity entities : ciudades) {
+            dtos.add(this.ciudadEntity2DTO(entities, loadIcons));
+        }
+        return dtos;
+
+    }
+
 }
+
+

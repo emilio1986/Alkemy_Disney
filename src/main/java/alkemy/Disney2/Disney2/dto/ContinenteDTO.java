@@ -16,8 +16,15 @@ public class ContinenteDTO {
     private String denominacion;
     private List<CiudadDTO> ciudades;                   //Agregado ahora
 
-    public  void agregarCiudadDTO(CiudadDTO ciudadDTO){ //Agregado ahora
+    public void agregarCiudadDTO(CiudadDTO ciudadDTO) { //Agregado ahora
 
         this.ciudades.add(ciudadDTO);               //Agregado ahora
+    }
+
+    public void setCiudades(List<CiudadDTO> ciudadesDTO) {
+    }
+
+    public void addCiudad(CiudadDTO dtoCiudad) {
+        this.ciudades.add(dtoCiudad);
     }
 }

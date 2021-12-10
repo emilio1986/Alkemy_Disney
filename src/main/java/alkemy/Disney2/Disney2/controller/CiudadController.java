@@ -1,15 +1,12 @@
 package alkemy.Disney2.Disney2.controller;
 
-import org.springframework.context.annotation.Lazy;
+import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
+import alkemy.Disney2.Disney2.dto.CiudadDTO;
+import alkemy.Disney2.Disney2.service.CiudadService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import alkemy.Disney2.Disney2.dto.CiudadDTO;
-import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
-import alkemy.Disney2.Disney2.service.CiudadService;
-import org.springframework.beans.factory.annotation.Autowired;
-
 
 import java.util.List;
 
@@ -21,7 +18,7 @@ public class CiudadController {
     private CiudadService ciudadService; //Interfaz
 
     @Autowired
-    public CiudadController(@Lazy CiudadService ciudadService) {
+    public CiudadController(CiudadService ciudadService) {
 
         this.ciudadService = ciudadService;
     }
@@ -35,7 +32,7 @@ public class CiudadController {
 
     //tipo de solicitud
     @GetMapping("/{id}")                                                            //PASS
-    public ResponseEntity<CiudadDTO> getDetailsById(@PathVariable Long id ) {
+    public ResponseEntity<CiudadDTO> getDetailsById(@PathVariable Long id) {
         CiudadDTO ciudad = this.ciudadService.getDetailsById(id);
         return ResponseEntity.ok(ciudad);
     }
@@ -48,13 +45,13 @@ public class CiudadController {
 
     }
 
-    @PostMapping("/{id}/icons/{idIcon}")                        //-> icons se usa pra darle semantica  la URL(NO ES VARIABLE)
-    public ResponseEntity<Void> addIcon(@PathVariable Long id, @PathVariable Long idIcon) {
-
+    @PostMapping("/{id}/icons/{idIcon}")
+    public ResponseEntity<Void> addIcon(@PathVariable Long id, @PathVariable Long idIcon) {    //PASS
         this.ciudadService.addICon(id, idIcon);
         return ResponseEntity.status(HttpStatus.CREATED).build();
 
     }
+
 
     @PutMapping("/{id}")                                                           //PASS
     public ResponseEntity<CiudadDTO> update(@PathVariable Long id, @RequestBody CiudadDTO ciudad) {

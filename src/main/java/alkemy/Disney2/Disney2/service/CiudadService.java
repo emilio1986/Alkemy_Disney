@@ -23,4 +23,5 @@ public interface CiudadService {
     void delete(Long id);
 
     CiudadEntity getEntityById(Long idCiudad);
+
 }

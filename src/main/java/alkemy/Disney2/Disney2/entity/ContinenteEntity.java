@@ -15,8 +15,8 @@ import java.util.List;
 @Setter
 //Soft delete-> se convierte en una ctualizacion donde setea el campo deleted en true al id recibido.
 
-@SQLDelete(sql="UPDATE continente SET deleted=true WHERE id=?")
-@Where(clause="deleted=false") //-> con esta clausula identifico los que estan "borrados de los que no"
+@SQLDelete(sql = "UPDATE continente SET deleted=true WHERE id=?")
+@Where(clause = "deleted=false") //-> con esta clausula identifico los que estan "borrados de los que no"
 public class ContinenteEntity {
 
     @Id
@@ -29,6 +29,7 @@ public class ContinenteEntity {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)     // 1 a n
     @JoinColumn(name = "id", insertable = false, updatable = false) // solo lo uso para obtener(get) las ciudades
+
     private List<CiudadEntity> ciudades = new ArrayList<>();  // coleccion de ciudades que contiene el continente
 
     //campo Soft delete
@@ -37,5 +38,9 @@ public class ContinenteEntity {
 
     public void addCiudad(CiudadEntity ciudadEntity) {
         this.ciudades.add(ciudadEntity);
+    }
+
+    public void removeCiudad(CiudadEntity ciudadEntity) {
+        this.ciudades.remove(ciudadEntity);
     }
 }

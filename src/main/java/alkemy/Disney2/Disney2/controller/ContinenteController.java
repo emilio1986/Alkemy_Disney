@@ -2,7 +2,6 @@ package alkemy.Disney2.Disney2.controller;
 
 import alkemy.Disney2.Disney2.dto.ContinenteDTO;
 import alkemy.Disney2.Disney2.service.ContinenteService;
-import alkemy.Disney2.Disney2.service.impl.ContinenteServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +34,7 @@ public class ContinenteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ContinenteDTO> getContById(@PathVariable Long id) {                     //PASS
-        ContinenteDTO continente = this.continenteService.getContinenteById(id);
+        ContinenteDTO continente = this.continenteService.getContinenteById((id));
         return ResponseEntity.ok().body(continente);
     }
 
@@ -45,6 +44,11 @@ public class ContinenteController {
         return ResponseEntity.ok(result);
     }
 
+    //@PostMapping("/{id}/ciudades/{idCiudad}")
+    //public ResponseEntity<Void> addIcon(@PathVariable Long id, @PathVariable Long idCiudad) {
+      //  this.continenteService.addCiudad(id, idCiudad);
+        //return ResponseEntity.status(HttpStatus.CREATED).build();
+    //}   NOVA
 
     @DeleteMapping("/{id}")                                                                     //PASS
     public ResponseEntity<Void> delete(@PathVariable Long id) {
@@ -55,5 +59,5 @@ public class ContinenteController {
 
 }
 
-// Forma  de acceso al endpoint -> POST localhost/continente-> "CREO UN CONTINENTE"
+
 

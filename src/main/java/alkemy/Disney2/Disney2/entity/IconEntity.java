@@ -56,4 +56,6 @@ public class IconEntity {
 
     }
 
+    public void setFechaCreacion(String fechaCreacion) {       //ojo con esto q ya esta el campo declarado en la entidad
+    }
 }

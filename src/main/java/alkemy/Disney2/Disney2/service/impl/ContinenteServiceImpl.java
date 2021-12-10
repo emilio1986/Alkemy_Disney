@@ -1,11 +1,14 @@
 package alkemy.Disney2.Disney2.service.impl;
 
 import alkemy.Disney2.Disney2.dto.ContinenteDTO;
+import alkemy.Disney2.Disney2.entity.CiudadEntity;
 import alkemy.Disney2.Disney2.entity.ContinenteEntity;
 import alkemy.Disney2.Disney2.mapper.ContinenteMapper;
 import alkemy.Disney2.Disney2.repository.ContinenteRepository;
+import alkemy.Disney2.Disney2.service.CiudadService;
 import alkemy.Disney2.Disney2.service.ContinenteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,11 +24,16 @@ public class ContinenteServiceImpl implements ContinenteService {
     //Inyeccion
     @Autowired
     private ContinenteRepository continenteRepository;
+    @Autowired
+    private CiudadService ciuServ;
+
 
     @Autowired
-    public ContinenteServiceImpl(ContinenteRepository continentRepository, ContinenteMapper continenteMapper) {
+    public ContinenteServiceImpl(@Lazy ContinenteRepository continentRepository, ContinenteMapper continenteMapper, CiudadService ciuServ) {
         this.continenteRepository = continentRepository;
         this.continenteMapper = continenteMapper;
+        this.ciuServ = ciuServ;
+
     }
 
     public ContinenteDTO save(ContinenteDTO dto) {                                           //PASS
@@ -34,7 +42,7 @@ public class ContinenteServiceImpl implements ContinenteService {
         // guardo el  CONTINENTE como entity en BD y me lo quedo  en entitySaved para conv Entity2Dto
         ContinenteEntity entitySaved = continenteRepository.save(entity);
         //  conv  entitySaved de Entity2TDo a DTO y lo guardo en result
-        ContinenteDTO result = continenteMapper.continenteEntity2TDO(entitySaved);
+        ContinenteDTO result = continenteMapper.continenteEntity2TDO(entitySaved, true);
         return result;
 
     }
@@ -53,7 +61,7 @@ public class ContinenteServiceImpl implements ContinenteService {
         ContinenteEntity newEntity = continenteMapper.continenteDTO2Entity(continente);
         newEntity.setId(oldEntity.get().getId());
         ContinenteEntity entitySaved = continenteRepository.save(newEntity);
-        ContinenteDTO result = continenteMapper.continenteEntity2TDO(entitySaved);
+        ContinenteDTO result = continenteMapper.continenteEntity2TDO(entitySaved, true);
         return result;
     }
 
@@ -62,11 +70,34 @@ public class ContinenteServiceImpl implements ContinenteService {
         this.continenteRepository.deleteById(id);
     }               //PASS
 
+
     @Override
     public ContinenteDTO getContinenteById(Long id) {                                        //PASS
         ContinenteEntity entidadCont = this.continenteRepository.getById(id);
-        ContinenteDTO contDTO = this.continenteMapper.continenteEntity2TDO(entidadCont);
+        ContinenteDTO contDTO = this.continenteMapper.continenteEntity2TDO(entidadCont, true);
         return contDTO;
+    }
+
+
+    @Override
+    public ContinenteDTO getDetailsById(Long id) {
+        Optional<ContinenteEntity> entity = Optional.of(continenteRepository.getById(id));
+        ContinenteDTO contDTO = this.continenteMapper.continenteEntity2TDO(entity.get(), true);
+        return contDTO;
+    }
+
+    @Override
+    public void addCiudad(CiudadEntity ciudadEnt, Long idCiudad) {
+
+    }
+
+    @Override
+    public void addCiudad(Long idCiudad, Long idCont) {
+        ContinenteEntity contEntity = continenteRepository.getById(idCont);
+        CiudadEntity ciudadEnt = this.ciuServ.getEntityById(idCiudad);
+        contEntity.addCiudad(ciudadEnt);
+        this.continenteRepository.save(contEntity);
+
 
     }
 

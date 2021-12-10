@@ -36,7 +36,7 @@ public class CiudadEntity {
     //CONSIDERAR QUITAR LA CASCADA POR EL BORRADO DE UNA CIUDAD Q PERTENECE A 1 CONT  // 1 a n
     @JoinColumn(name = "continente_id", insertable = false, updatable = false)
 
-    private ContinenteEntity continente ;
+    private ContinenteEntity continente;
 
     @Column(name = "continente_id", nullable = false)
     private Long continenteId;                                      //defino la columna q no puede ser null y apunta a un cont(FK)
