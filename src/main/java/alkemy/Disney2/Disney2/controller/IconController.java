@@ -1,5 +1,4 @@
 package alkemy.Disney2.Disney2.controller;
-
 import alkemy.Disney2.Disney2.dto.IconBasicDTO;
 import alkemy.Disney2.Disney2.dto.IconDTO;
 import alkemy.Disney2.Disney2.service.IconService;
@@ -9,16 +8,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("icons")
 public class IconController {
 
 
-    private IconService iconService;        //Interfaz
+    private IconService iconService;
 
     @Autowired
-    //me llega un IconService y se lo asigno a mi iconService
     public IconController(IconService iconService) {
 
         this.iconService = iconService;
@@ -34,7 +33,7 @@ public class IconController {
     //@PostMapping("/{id}/ciudad/{idCiudad}")
     //public ResponseEntity<Void> addCiudad(@PathVariable Long id, @PathVariable Long idCiudad) {
 
-    //  this.iconService.addCiudad(id, idCiudad);
+      //this.iconService.addCiudad(id, idCiudad);
     //return ResponseEntity.status(HttpStatus.CREATED).build();
     //}
 
@@ -51,6 +50,16 @@ public class IconController {
         this.iconService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<IconDTO>> getDetailsByFilters(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String date,
+            @RequestParam(required = false) Set<Long> cities,
+            @RequestParam(required = false, defaultValue = "ASC") String order) {
+        List<IconDTO> icons = this.iconService.getByFilters(name, date, cities, order);
+        return ResponseEntity.ok(icons);
     }
 
     //@DeleteMapping("/{id}/ciudad/{idCiudad}")

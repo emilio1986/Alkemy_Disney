@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("ciudades")
 public class CiudadController {
 
-    @Autowired
+
     private CiudadService ciudadService; //Interfaz
 
     @Autowired
@@ -30,7 +30,7 @@ public class CiudadController {
         return ResponseEntity.ok(ciudades);
     }
 
-    //tipo de solicitud
+
     @GetMapping("/{id}")                                                            //PASS
     public ResponseEntity<CiudadDTO> getDetailsById(@PathVariable Long id) {
         CiudadDTO ciudad = this.ciudadService.getDetailsById(id);

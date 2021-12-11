@@ -1,10 +1,8 @@
 package alkemy.Disney2.Disney2.mapper;
 
-import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
 import alkemy.Disney2.Disney2.dto.CiudadDTO;
 import alkemy.Disney2.Disney2.dto.IconBasicDTO;
 import alkemy.Disney2.Disney2.dto.IconDTO;
-import alkemy.Disney2.Disney2.entity.CiudadEntity;
 import alkemy.Disney2.Disney2.entity.IconEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -105,16 +103,16 @@ public class IconMapper {
 
     public Set<IconDTO> ciudadEntityList2DTO(Set<IconEntity> icons, boolean loadIcons) {
         Set<IconDTO> dtos = new HashSet<>();
-        for (IconEntity entities:icons){
+        for (IconEntity entities : icons) {
             dtos.add(this.iconEntity2DTO(entities, loadIcons));
         }
         return dtos;
     }
 
-    public List<IconDTO> iconEntitySet2DTOList(Set<IconEntity> icons, boolean loadIcons) {
+    public List<IconDTO> iconEntitySet2DTOList(Set<IconEntity> entities, boolean loadIcons) {
         return null;
-
     }
+
 
     public List<IconBasicDTO> iconEntityList2BasicDTOList(List<IconEntity> entities) {
 
@@ -131,7 +129,7 @@ public class IconMapper {
     }
 
 
-    public List<IconDTO> iconEntityList2DTOList(List<IconEntity> entities) {
+    public List<IconDTO> iconEntityList2DTOList(List<IconEntity> entities, boolean ciudades) {
 
         List<IconDTO> dtos = new ArrayList<>();
         IconDTO iconDTO;

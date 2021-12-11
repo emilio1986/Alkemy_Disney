@@ -1,11 +1,12 @@
 package alkemy.Disney2.Disney2.service.impl;
 
-
 import alkemy.Disney2.Disney2.dto.IconBasicDTO;
 import alkemy.Disney2.Disney2.dto.IconDTO;
+import alkemy.Disney2.Disney2.dto.IconFiltersDTO;
 import alkemy.Disney2.Disney2.entity.IconEntity;
 import alkemy.Disney2.Disney2.mapper.IconMapper;
 import alkemy.Disney2.Disney2.repository.IconRepository;
+import alkemy.Disney2.Disney2.repository.specifications.IconSpecification;
 import alkemy.Disney2.Disney2.service.CiudadService;
 import alkemy.Disney2.Disney2.service.IconService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class IconServiceImpl implements IconService {
@@ -27,11 +29,14 @@ public class IconServiceImpl implements IconService {
 
     private CiudadService ciudadService;
 
+    private IconSpecification iconSpecification;
+
+
     @Autowired
-    public IconServiceImpl(@Lazy IconRepository iconRepository, IconMapper iconMapper) {
+    public IconServiceImpl(@Lazy IconRepository iconRepository, IconMapper iconMapper, IconSpecification iconSpecification) {
         this.iconRepository = iconRepository;
         this.iconMapper = iconMapper;
-
+        this.iconSpecification = iconSpecification;
 
     }
 
@@ -56,7 +61,7 @@ public class IconServiceImpl implements IconService {
     @Override
     public List<IconDTO> getAll() {
         List<IconEntity> entities = this.iconRepository.findAll();
-        List<IconDTO> iconDTOS = iconMapper.iconEntityList2DTOList(entities);
+        List<IconDTO> iconDTOS = iconMapper.iconEntityList2DTOList(entities, true);
         return iconDTOS;
     }
 
@@ -94,6 +99,14 @@ public class IconServiceImpl implements IconService {
     @Override
     public IconEntity getEntityById(Long idIcon) {
         return this.iconRepository.getById(idIcon);
+    }
+
+    @Override
+    public List<IconDTO> getByFilters(String name, String date, Set<Long> cities, String order) {
+        IconFiltersDTO filtersDTO = new IconFiltersDTO(name, date, cities, order);
+        List<IconEntity> entities = this.iconRepository.findAll(this.iconSpecification.getByFilters(filtersDTO));
+        List<IconDTO> dtos = this.iconMapper.iconEntityList2DTOList(entities, true);
+        return dtos;
     }
 
 

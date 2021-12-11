@@ -5,6 +5,7 @@ import alkemy.Disney2.Disney2.dto.IconDTO;
 import alkemy.Disney2.Disney2.entity.IconEntity;
 
 import java.util.List;
+import java.util.Set;
 
 public interface IconService {
 
@@ -22,4 +23,6 @@ public interface IconService {
     void delete(Long id);
 
     IconEntity getEntityById(Long idIcon);
+
+    List<IconDTO> getByFilters(String name, String date, Set<Long> cities, String order);
 }
