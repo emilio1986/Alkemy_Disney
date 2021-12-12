@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("ciudades")
 public class CiudadController {
 
-
+@Autowired
     private CiudadService ciudadService; //Interfaz
 
     @Autowired

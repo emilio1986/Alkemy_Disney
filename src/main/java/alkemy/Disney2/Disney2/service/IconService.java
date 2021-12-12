@@ -11,7 +11,7 @@ public interface IconService {
 
     IconDTO getDetailsById(Long id);
 
-    List<IconBasicDTO> getAllBasics();
+    List<IconBasicDTO> getAllB();
 
     List<IconDTO> getAll();
 

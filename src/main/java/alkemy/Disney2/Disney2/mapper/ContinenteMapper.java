@@ -18,7 +18,8 @@ public class ContinenteMapper {
     private CiudadMapper ciudadMapper;
 
     @Autowired
-    public ContinenteMapper(CiudadMapper ciudadMapper) {
+    public ContinenteMapper(
+            CiudadMapper ciudadMapper) {
         this.ciudadMapper = ciudadMapper;
     }
 

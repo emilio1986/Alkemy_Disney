@@ -1,4 +1,5 @@
 package alkemy.Disney2.Disney2.controller;
+
 import alkemy.Disney2.Disney2.dto.IconBasicDTO;
 import alkemy.Disney2.Disney2.dto.IconDTO;
 import alkemy.Disney2.Disney2.service.IconService;
@@ -27,15 +28,9 @@ public class IconController {
     @PostMapping
     public ResponseEntity<IconDTO> save(@RequestBody IconDTO icon) {
         IconDTO result = this.iconService.save(icon);
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);             //devuelvo el IconDto que ya guarde en BD
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
-    //@PostMapping("/{id}/ciudad/{idCiudad}")
-    //public ResponseEntity<Void> addCiudad(@PathVariable Long id, @PathVariable Long idCiudad) {
-
-      //this.iconService.addCiudad(id, idCiudad);
-    //return ResponseEntity.status(HttpStatus.CREATED).build();
-    //}
 
     @PutMapping("/{id}")
     public ResponseEntity<IconDTO> update(@PathVariable Long id, @RequestBody IconDTO icon) {
@@ -46,14 +41,20 @@ public class IconController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {             //PASS
         this.iconService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
     }
 
+    @GetMapping("/allB")                                      //  GET BASICS PASS
+    public ResponseEntity<List<IconBasicDTO>> getAllB() {
+        List<IconBasicDTO> icons = this.iconService.getAllB();
+        return ResponseEntity.ok(icons);
+    }
+
     @GetMapping
-    public ResponseEntity<List<IconDTO>> getDetailsByFilters(
+    public ResponseEntity<List<IconDTO>> getDetailsByFilters(               //REJECTED
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String date,
             @RequestParam(required = false) Set<Long> cities,
@@ -69,24 +70,25 @@ public class IconController {
     //}
 
 
-    @GetMapping
-    public ResponseEntity<List<IconBasicDTO>> getAll() {
-        List<IconBasicDTO> icons = this.iconService.getAllBasics();
+    //@GetMapping
+    //public ResponseEntity<List<IconBasicDTO>> getAll() {
+    //List<IconBasicDTO> icons = this.iconService.getAllB();
+    //return ResponseEntity.ok(icons);
+    //}
+
+
+    @GetMapping("/all")                                 //PASS
+    ResponseEntity<List<IconDTO>> getAll() {
+        List<IconDTO> icons = this.iconService.getAll();
         return ResponseEntity.ok(icons);
     }
-
-    //@GetMapping
-    // public ResponseEntity<List<IconDTO>> getAllBasics() {
-    //   List<IconDTO> icons = this.iconService.getAll();
-    // return ResponseEntity.ok(icons);
-    //}
 
 
     //tipo de solicitud
     @GetMapping("/{id}")
-    public ResponseEntity<IconDTO> getDetailsById(@PathVariable Long id) {
+    public ResponseEntity<IconDTO> getDetailsById(@PathVariable Long id) {       //PASS
         IconDTO icon = this.iconService.getDetailsById(id);
-        return ResponseEntity.ok(icon);  //devuelvo el icono a mostrar
+        return ResponseEntity.ok(icon);
     }
 
 

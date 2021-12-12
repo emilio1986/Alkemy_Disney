@@ -1,10 +1,13 @@
 package alkemy.Disney2.Disney2.repository.specifications;
+
 import alkemy.Disney2.Disney2.dto.IconFiltersDTO;
 import alkemy.Disney2.Disney2.entity.CiudadEntity;
 import alkemy.Disney2.Disney2.entity.IconEntity;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
@@ -14,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Component
 public class IconSpecification {
 
     public Specification<IconEntity> getByFilters(IconFiltersDTO filtersDTO) {
@@ -64,4 +67,3 @@ public class IconSpecification {
         };
     }
 }
-

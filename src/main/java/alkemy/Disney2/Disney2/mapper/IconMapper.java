@@ -27,7 +27,7 @@ public class IconMapper {
         IconEntity entity = new IconEntity();
         entity.setImagen(dto.getImagen());
         entity.setDenominacion(dto.getDenominacion());
-        entity.setFechaCreacion(this.string2LocalDate(dto.getFechaCreacion()).toString());
+        entity.setFechaCreacion(this.string2LocalDate(dto.getFechaCreacion()));
         entity.setHistoria(dto.getHistoria());
         return entity;
     }
@@ -58,11 +58,12 @@ public class IconMapper {
         return date;
     }
 
+
     public void iconEntityRefreshValues(IconEntity entity, IconDTO iconDTO) {
 
         entity.setImagen(iconDTO.getImagen());
         entity.setDenominacion(iconDTO.getDenominacion());
-        entity.setFechaCreacion(this.string2LocalDate(iconDTO.getFechaCreacion()).toString());
+        entity.setFechaCreacion(this.string2LocalDate(iconDTO.getFechaCreacion()));
         // FALTA altura en BD-> entity.setAltura(iconDTO.getAltua());
         entity.setHistoria(iconDTO.getHistoria());
     }
@@ -86,20 +87,6 @@ public class IconMapper {
         return dtos;
     }
 
-    public List<IconBasicDTO> iconEntitySet2BasicDTOList(Collection<IconEntity> entities) {
-        List<IconBasicDTO> dtos = new ArrayList<>();
-        IconBasicDTO basicDTO;
-        for (IconEntity entity : entities) {
-            basicDTO = new IconBasicDTO();
-            basicDTO.setId(entity.getId());
-            basicDTO.setImagen(entity.getImagen());
-            basicDTO.setDenominacion(entity.getDenominacion());
-            dtos.add(basicDTO);
-        }
-        return dtos;
-
-    }
-
 
     public Set<IconDTO> ciudadEntityList2DTO(Set<IconEntity> icons, boolean loadIcons) {
         Set<IconDTO> dtos = new HashSet<>();
@@ -110,11 +97,28 @@ public class IconMapper {
     }
 
     public List<IconDTO> iconEntitySet2DTOList(Set<IconEntity> entities, boolean loadIcons) {
-        return null;
+        List<IconDTO> dtos = new ArrayList<>();
+        for (IconEntity entity : entities) {
+            dtos.add(this.iconEntity2DTO(entity, false));
+        }
+        return dtos;
+    }
+
+    public List<IconBasicDTO> iconEntitySet2BasicDTOList(Collection<IconEntity> entities) {    //" FUNCIONA" CON ICONBASIC
+        List<IconBasicDTO> dtos = new ArrayList<>();
+        IconBasicDTO basicDTO;
+        for (IconEntity entity : entities) {
+            basicDTO = new IconBasicDTO();
+            basicDTO.setId(entity.getId());
+            basicDTO.setDenominacion(entity.getDenominacion());
+            basicDTO.setImagen(entity.getImagen());
+            dtos.add(basicDTO);
+        }
+        return dtos;
     }
 
 
-    public List<IconBasicDTO> iconEntityList2BasicDTOList(List<IconEntity> entities) {
+    public List<IconBasicDTO> iconEntityList2BasicDTOList(List<IconEntity> entities) {    //" FUNCIONA" CON ICONBASIC
 
         List<IconBasicDTO> dtos = new ArrayList<>();
         IconBasicDTO basicDTO;

@@ -7,7 +7,6 @@ import alkemy.Disney2.Disney2.entity.IconEntity;
 import alkemy.Disney2.Disney2.mapper.IconMapper;
 import alkemy.Disney2.Disney2.repository.IconRepository;
 import alkemy.Disney2.Disney2.repository.specifications.IconSpecification;
-import alkemy.Disney2.Disney2.service.CiudadService;
 import alkemy.Disney2.Disney2.service.IconService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -27,7 +26,7 @@ public class IconServiceImpl implements IconService {
 
     private IconMapper iconMapper;
 
-    private CiudadService ciudadService;
+    //private CiudadService ciudadService;
 
     private IconSpecification iconSpecification;
 
@@ -36,8 +35,8 @@ public class IconServiceImpl implements IconService {
     public IconServiceImpl(@Lazy IconRepository iconRepository, IconMapper iconMapper, IconSpecification iconSpecification) {
         this.iconRepository = iconRepository;
         this.iconMapper = iconMapper;
+        //this.ciudadService = ciudadService;
         this.iconSpecification = iconSpecification;
-
     }
 
     @Override
@@ -52,18 +51,20 @@ public class IconServiceImpl implements IconService {
 
 
     @Override
-    public List<IconBasicDTO> getAllBasics() {
+    public List<IconBasicDTO> getAllB() {
         List<IconEntity> entities = this.iconRepository.findAll();
-        List<IconBasicDTO> iconBasicDTOS = iconMapper.iconEntityList2BasicDTOList(entities);
+        List<IconBasicDTO> iconBasicDTOS = iconMapper.iconEntitySet2BasicDTOList(entities);
         return iconBasicDTOS;
     }
+
 
     @Override
     public List<IconDTO> getAll() {
         List<IconEntity> entities = this.iconRepository.findAll();
-        List<IconDTO> iconDTOS = iconMapper.iconEntityList2DTOList(entities, true);
+        List<IconDTO> iconDTOS = iconMapper.iconEntityList2DTOList(entities, false);
         return iconDTOS;
     }
+
 
     @Override
     public IconDTO save(IconDTO iconDTO) {
@@ -104,10 +105,11 @@ public class IconServiceImpl implements IconService {
     @Override
     public List<IconDTO> getByFilters(String name, String date, Set<Long> cities, String order) {
         IconFiltersDTO filtersDTO = new IconFiltersDTO(name, date, cities, order);
-        List<IconEntity> entities = this.iconRepository.findAll(this.iconSpecification.getByFilters(filtersDTO));
-        List<IconDTO> dtos = this.iconMapper.iconEntityList2DTOList(entities, true);
+        Set<IconEntity> entities = this.iconRepository.findAll(this.iconSpecification.getByFilters(filtersDTO));
+        List<IconDTO> dtos = this.iconMapper.iconEntitySet2DTOList(entities, true);
         return dtos;
     }
-
-
 }
+
+
+

@@ -20,7 +20,7 @@ import java.util.Set;
 @Component
 public class CiudadMapper {
 
-    @Autowired
+
     private IconMapper iconMapper;
     private IconRepository iconRepository;
 
@@ -79,13 +79,7 @@ public class CiudadMapper {
 
     public IconEntity iconDTO2Entity(IconDTO dto) {
 
-        IconEntity iconEnt = this.iconRepository.getById(dto.getId());
-        iconEnt.setHistoria(dto.getHistoria());
-        iconEnt.setFechaCreacion(dto.getFechaCreacion());
-        iconEnt.setDenominacion(dto.getDenominacion());            //ojo este metodo intentando mostrar ciudades de CONT
-        iconEnt.setId(dto.getId());
-
-        return iconEnt;
+        return null;
     }
 
 
