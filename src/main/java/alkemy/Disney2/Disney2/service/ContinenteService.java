@@ -1,7 +1,6 @@
 package alkemy.Disney2.Disney2.service;
 
 import alkemy.Disney2.Disney2.dto.ContinenteDTO;
-import alkemy.Disney2.Disney2.entity.CiudadEntity;
 
 import java.util.List;
 
@@ -20,7 +19,5 @@ public interface ContinenteService {
 
     ContinenteDTO getDetailsById(Long id);
 
-    void addCiudad(CiudadEntity ciudadEnt, Long idCiudad);
 
-    void addCiudad(Long idCiudad, Long idCont);
 }

@@ -6,8 +6,6 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "continente")
@@ -27,20 +25,13 @@ public class ContinenteEntity {
 
     private String denominacion;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)     // 1 a n
-    @JoinColumn(name = "id", insertable = false, updatable = false) // solo lo uso para obtener(get) las ciudades
+    //@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)     // 1 a n
+    //@JoinColumn(name = "id", insertable = false, updatable = false) // solo lo uso para obtener(get) las ciudades
 
-    private List<CiudadEntity> ciudades = new ArrayList<>();  // coleccion de ciudades que contiene el continente
+    //  private List<CiudadEntity> ciudades = new ArrayList<SINTIPO>();  // coleccion de ciudades que contiene el continente
 
     //campo Soft delete
     private boolean deleted = Boolean.FALSE;
 
 
-    public void addCiudad(CiudadEntity ciudadEntity) {
-        this.ciudades.add(ciudadEntity);
-    }
-
-    public void removeCiudad(CiudadEntity ciudadEntity) {
-        this.ciudades.remove(ciudadEntity);
-    }
 }

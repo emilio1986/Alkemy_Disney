@@ -52,7 +52,7 @@ public class CiudadMapper {
         dto.setCantHabitantes(entity.getCantHabitantes());
         dto.setContinenteId(entity.getContinenteId());
         if (loadIcons) {
-            Set<IconDTO> iconsDTO = this.iconMapper.ciudadEntityList2DTO(entity.getIcons(), false);
+            List<IconDTO> iconsDTO = this.iconMapper.ciudadEntityList2DTO(entity.getIcons(), false);
             dto.setIcons(iconsDTO);
         }
         return dto;
@@ -67,9 +67,9 @@ public class CiudadMapper {
     }
 
 
-    public java.util.Set<IconEntity> iconDTOList2Entity(List<IconDTO> dtos) {
+    public Set<IconEntity> iconDTOList2Entity(List<IconDTO> dtos) {
 
-        java.util.Set<IconEntity> entities = new HashSet<>();
+        Set<IconEntity> entities = new HashSet<IconEntity>();
         for (IconDTO dto : dtos) {
             entities.add(this.iconDTO2Entity(dto));
 
@@ -84,7 +84,7 @@ public class CiudadMapper {
 
 
     public List<CiudadDTO> ciudadEntitySet2TDOList(List<CiudadEntity> listaCiudad, boolean loadIcons) {
-        List<CiudadDTO> dtos = new ArrayList<>();
+        List<CiudadDTO> dtos = new ArrayList<CiudadDTO>();
         for (CiudadEntity entity : listaCiudad) {
             dtos.add(this.ciudadEntity2DTO(entity, loadIcons));
         }
@@ -95,7 +95,7 @@ public class CiudadMapper {
 
     //Considerar Sets tb como param
     public List<CiudadDTO> ciudadEntityList2DTOList(List<CiudadEntity> entities, boolean loadIcons) {
-        List<CiudadDTO> dtos = new ArrayList<>();
+        List<CiudadDTO> dtos = new ArrayList<CiudadDTO>();
         for (CiudadEntity entity : entities) {
             dtos.add(this.ciudadEntity2DTO(entity, loadIcons));
         }
@@ -112,7 +112,7 @@ public class CiudadMapper {
     }
 
     public List<CiudadBasicDTO> ciudadEntityList2BasicDTOList(List<CiudadEntity> entities) {
-        List<CiudadBasicDTO> dtos = new ArrayList<>();
+        List<CiudadBasicDTO> dtos = new ArrayList<CiudadBasicDTO>();
         CiudadBasicDTO basicDTO;
         for (CiudadEntity entity : entities) {
             basicDTO = new CiudadBasicDTO();
@@ -136,7 +136,7 @@ public class CiudadMapper {
         dto.setSuperficie(entidadGuardada.getSuperficie());
         if (loadIcons) {
             List<IconDTO> iconDTOS = this.iconMapper.iconEntitySet2DTOList(entidadGuardada.getIcons(), loadIcons);
-            dto.setIcons((Set<IconDTO>) iconDTOS);
+            dto.setIcons(iconDTOS) ;
         }
         dto.setImagen(entidadGuardada.getImagen());
         dto.setContinenteId(entidadGuardada.getContinenteId());
@@ -145,9 +145,11 @@ public class CiudadMapper {
     }
 
 
+
+
     public List<CiudadDTO> continenteEntityList2DTO(List<CiudadEntity> ciudades, boolean loadIcons) {
 
-        List<CiudadDTO> dtos = new ArrayList<>();
+        List<CiudadDTO> dtos = new ArrayList<CiudadDTO>();
         for (CiudadEntity entities : ciudades) {
             dtos.add(this.ciudadEntity2DTO(entities, loadIcons));
         }

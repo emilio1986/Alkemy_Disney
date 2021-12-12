@@ -2,14 +2,11 @@ package alkemy.Disney2.Disney2.service.impl;
 
 import alkemy.Disney2.Disney2.dto.CiudadBasicDTO;
 import alkemy.Disney2.Disney2.dto.CiudadDTO;
-import alkemy.Disney2.Disney2.dto.ContinenteDTO;
 import alkemy.Disney2.Disney2.entity.CiudadEntity;
 import alkemy.Disney2.Disney2.entity.IconEntity;
 import alkemy.Disney2.Disney2.mapper.CiudadMapper;
 import alkemy.Disney2.Disney2.repository.CiudadRepository;
-import alkemy.Disney2.Disney2.repository.ContinenteRepository;
 import alkemy.Disney2.Disney2.service.CiudadService;
-import alkemy.Disney2.Disney2.service.ContinenteService;
 import alkemy.Disney2.Disney2.service.IconService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -59,9 +56,8 @@ public class CiudadServiceImpl implements CiudadService {
     public CiudadDTO save(CiudadDTO dto) {
 
         CiudadEntity entity = ciudadMapper.ciudadDTO2Entity(dto);
-        CiudadEntity entidadGuardada = ciudadRepository.save(entity);                       //RESOLVER
-       // ContinenteDTO continenteDTO = this.continenteService.getContinenteById(entity.getContinenteId());   //guardamos la ciudad
-        //continenteDTO.addCiudad(dto);                                                    //guardamos la ciudad
+        CiudadEntity entidadGuardada = ciudadRepository.save(entity);
+
         CiudadDTO result;
         result = ciudadMapper.ciudadEntity2DTO(true, entidadGuardada);
         return result;

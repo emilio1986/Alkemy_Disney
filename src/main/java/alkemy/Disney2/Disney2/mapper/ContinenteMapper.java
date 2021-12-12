@@ -34,7 +34,7 @@ public class ContinenteMapper {
 
 
     public List<ContinenteDTO> continenteEntityList2DTOList(List<ContinenteEntity> entities) {
-        List<ContinenteDTO> dtos = new ArrayList<>();
+        List<ContinenteDTO> dtos = new ArrayList<ContinenteDTO>();
         for (ContinenteEntity entity : entities) {
             //transformo la entity a Dto por cada elem d la lista
             dtos.add(this.continenteEntity2TDO(entity, true));
@@ -48,14 +48,14 @@ public class ContinenteMapper {
         dto.setId(entity.getId());
         dto.setDenominacion(entity.getDenominacion());
         if (loadCiudades) {
-            List<CiudadDTO> ciudadesDTO = this.ciudadMapper.continenteEntityList2DTO(entity.getCiudades(), true);
-            dto.setCiudades(ciudadesDTO);
+            //List<CiudadDTO> ciudadesDTO = this.ciudadMapper.continenteEntityList2DTO(entity.getCiudades(), true);
+            //dto.setCiudades(ciudadesDTO);
         }
         return dto;
     }
 
     public List<CiudadDTO> ciudadesEntityList2DTOList(List<CiudadEntity> entities) {        //Agregado ahora
-        List<CiudadDTO> dtos = new ArrayList<>();                                           //Agregado ahora
+        List<CiudadDTO> dtos = new ArrayList<CiudadDTO>();                                           //Agregado ahora
         for (CiudadEntity entity : entities) {                                                 //Agregado ahora
             //transformo la entityCiudad  a DtoCiudad por cada elem d la lista|             //Agregado ahora
             dtos.add(this.ciudadMapper.ciudadEntity2DTO(entity, true));         //Agregado ahora

@@ -42,7 +42,7 @@ public class IconMapper {
         dto.setFechaCreacion(entity.getFechaCreacion().toString());
         dto.setHistoria(entity.getHistoria());
         if (loadCiudades) {
-            // lo seteo en F para evitar la red ciclica
+
             List<CiudadDTO> ciudadesDTO = this.ciudadMapper.ciudadEntityList2DTOList(entity.getCiudades(), false);
             dto.setCiudadades(ciudadesDTO);
         }
@@ -69,9 +69,9 @@ public class IconMapper {
     }
 
 
-    public java.util.Set<IconEntity> iconDTOList2Entity(List<IconDTO> dtos) {
+    public Set<IconEntity> iconDTOList2Entity(List<IconDTO> dtos) {
 
-        java.util.Set<IconEntity> entities = new HashSet<>();
+        Set<IconEntity> entities = new HashSet<>();
         for (IconDTO dto : dtos) {
             entities.add(this.iconDTO2Entity(dto));
 
@@ -88,8 +88,8 @@ public class IconMapper {
     }
 
 
-    public Set<IconDTO> ciudadEntityList2DTO(Set<IconEntity> icons, boolean loadIcons) {
-        Set<IconDTO> dtos = new HashSet<>();
+    public List<IconDTO> ciudadEntityList2DTO(Set<IconEntity> icons, boolean loadIcons) {
+        List<IconDTO> dtos = new ArrayList<IconDTO>();
         for (IconEntity entities : icons) {
             dtos.add(this.iconEntity2DTO(entities, loadIcons));
         }
@@ -99,6 +99,7 @@ public class IconMapper {
     public List<IconDTO> iconEntitySet2DTOList(Set<IconEntity> entities, boolean loadIcons) {
         List<IconDTO> dtos = new ArrayList<>();
         for (IconEntity entity : entities) {
+            System.out.println(entity.getDenominacion());
             dtos.add(this.iconEntity2DTO(entity, false));
         }
         return dtos;

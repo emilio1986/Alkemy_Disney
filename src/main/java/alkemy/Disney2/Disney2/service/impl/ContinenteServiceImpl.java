@@ -1,7 +1,6 @@
 package alkemy.Disney2.Disney2.service.impl;
 
 import alkemy.Disney2.Disney2.dto.ContinenteDTO;
-import alkemy.Disney2.Disney2.entity.CiudadEntity;
 import alkemy.Disney2.Disney2.entity.ContinenteEntity;
 import alkemy.Disney2.Disney2.mapper.ContinenteMapper;
 import alkemy.Disney2.Disney2.repository.ContinenteRepository;
@@ -86,19 +85,6 @@ public class ContinenteServiceImpl implements ContinenteService {
         return contDTO;
     }
 
-    @Override
-    public void addCiudad(CiudadEntity ciudadEnt, Long idCiudad) {
 
-    }
-
-    @Override
-    public void addCiudad(Long idCiudad, Long idCont) {
-        ContinenteEntity contEntity = continenteRepository.getById(idCont);
-        CiudadEntity ciudadEnt = this.ciuServ.getEntityById(idCiudad);
-        contEntity.addCiudad(ciudadEnt);
-        this.continenteRepository.save(contEntity);
-
-
-    }
 
 }
